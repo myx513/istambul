@@ -2,7 +2,7 @@
 
 <html lang="ru"><head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
-<meta content="#294536" name="theme-color"/>
+<meta content="#111827" name="theme-color"/>
 <title>Стамбул — личный путеводитель · 2027</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -510,22 +510,587 @@ details[open] .photo-grid {
   border-color: #2a6b5a;
 }
 
+
+/* ── iOS-inspired visual refresh ───────────────────────────── */
+:root {
+  color-scheme: light;
+  --bg: #f3f5fb;
+  --paper: #ffffff;
+  --ink: #182238;
+  --muted: #758097;
+  --green: #536df5;
+  --green2: #edf0ff;
+  --green3: #d8defe;
+  --line: #e6eaf3;
+  --sand: #fff5eb;
+  --gold: #bd7839;
+  --gold-bg: #fff5e9;
+  --warn: #d28a37;
+  --warn-bg: #fff4e5;
+  --shadow: 0 8px 26px rgba(34, 49, 86, .065);
+  --radius: 19px;
+}
+html { scroll-padding-top: 82px; }
+body { background: var(--bg); color: var(--ink); }
+a { color: var(--green); }
+header {
+  color: #fff;
+  padding: 22px 20px 24px;
+  background: linear-gradient(118deg, #293d91 0%, #536df5 58%, #7a72ed 100%);
+  position: relative;
+  overflow: hidden;
+}
+header:after {
+  content: ""; position: absolute; width: 250px; height: 250px;
+  border: 1px solid rgba(255,255,255,.13); border-radius: 50%;
+  right: -75px; top: -145px; box-shadow: 0 0 0 28px rgba(255,255,255,.045), 0 0 0 58px rgba(255,255,255,.035);
+  pointer-events: none;
+}
+.header-inner { max-width: 1040px; position: relative; z-index: 1; }
+.brandline { align-items: center; justify-content: space-between; gap: 18px; }
+.brand-copy { display:flex; flex-direction:column; align-items:flex-start; gap:2px; }
+.eyebrow { color: rgba(255,255,255,.76); font-size:10px; letter-spacing:.15em; }
+.brandline strong { font-size: clamp(29px, 5vw, 38px); line-height:1.05; letter-spacing:-.055em; }
+.brand-dot { color:#ffd28d; }
+.brand-subtitle { color:rgba(255,255,255,.82); font-size:12px; margin-top:5px; }
+.theme-toggle {
+  display:inline-flex; align-items:center; gap:8px; flex:0 0 auto;
+  min-height:42px; padding:0 14px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.26); background:rgba(255,255,255,.15);
+  color:#fff; font:600 12px Inter,system-ui,sans-serif; cursor:pointer;
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  transition:background .2s, transform .2s;
+}
+.theme-toggle:active { transform:scale(.96); background:rgba(255,255,255,.25); }
+.theme-icon { font-size:17px; line-height:1; }
+.navwrap {
+  background:rgba(248,249,253,.88); border-bottom:1px solid rgba(224,229,241,.8);
+  padding:10px 14px; -webkit-backdrop-filter:blur(22px); backdrop-filter:blur(22px);
+}
+.menu-grid { max-width:1040px; display:block; }
+.day-btns {
+  flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; gap:7px;
+  padding:1px 1px 3px; -webkit-overflow-scrolling:touch;
+}
+.day-btns::-webkit-scrollbar { display:none; }
+.day-btn {
+  flex:0 0 auto; min-height:39px; padding:0 15px; border-radius:999px;
+  border:1px solid transparent; background:#edf0f7; color:#59647b;
+  font:650 12.5px Inter,system-ui,sans-serif; transition:all .18s ease;
+}
+.day-btn.active {
+  background:#536df5; border-color:#536df5; color:#fff;
+  box-shadow:0 4px 12px rgba(83,109,245,.25);
+}
+.day-btn.info-btn { margin-left:4px; border-color:#d9defd; color:#5365d8; background:#f0f2ff; }
+.day-btn.info-btn.active { color:#fff; background:#6b62dc; border-color:#6b62dc; }
+main { max-width:1040px; padding-top:22px; }
+.dayheading { padding:12px 2px 8px; }
+.dayheading span { color:#6878dc; letter-spacing:.13em; }
+.dayheading h1 { color:var(--ink); letter-spacing:-.045em; }
+.dayintro { color:#47536b; max-width:900px; }
+.dayintro p { color:inherit; }
+.primary-link {
+  border-radius:999px; padding:11px 17px; background:#536df5;
+  box-shadow:0 5px 16px rgba(83,109,245,.22); transition:transform .18s, box-shadow .18s;
+}
+.primary-link:active { transform:scale(.98); }
+.day-photo { border-radius:23px; box-shadow:0 12px 32px rgba(29,42,77,.12); }
+.day-photo img { height:clamp(220px, 38vw, 390px); }
+.day-photo figcaption { background:var(--paper); color:var(--muted); padding:10px 14px; }
+.points > h2 { letter-spacing:.12em; color:#7b86a0; }
+.stop {
+  border:1px solid var(--line); border-radius:18px; box-shadow:0 3px 13px rgba(34,49,86,.045);
+  transition:border-color .2s, box-shadow .2s;
+}
+.stop:has(details[open]) { border-color:#cbd3ff; box-shadow:0 8px 25px rgba(61,81,170,.09); }
+.stop summary { padding:15px 16px; min-height:70px; }
+.num { border-radius:12px; background:#edf0ff; color:#586eea; flex-basis:36px; height:36px; }
+.stop-title strong { letter-spacing:-.018em; }
+.chev { width:27px; height:27px; display:grid; place-items:center; border-radius:50%; background:#f1f3f9; font-size:16px; }
+.stop-content { padding:0 17px 19px; }
+.badge { border-radius:999px; padding:8px 12px; }
+.badge-time { background:#edf0ff; color:#5368dc; }
+.badge-map { background:#eff8f5; color:#16836a; border:1px solid #d9eee6; }
+.photo-grid { gap:8px; border-radius:15px; }
+.photo-grid img { border-radius:11px; }
+h2 { letter-spacing:-.035em; }
+h3 { color:#6273e4; }
+.tipline, .paid-warning, .paid-warn {
+  border-radius:13px; padding:12px 14px; border-left-width:3px;
+}
+.tags span { background:#f0f2ff; color:#5868c6; border-radius:999px; }
+.card, .info-card { border-radius:19px; border-color:var(--line); box-shadow:var(--shadow); }
+.metrics div { background:#eff1ff; border-radius:14px; }
+.metrics b { color:#536df5; }
+.status { color:#5364c8; background:#edf0ff; border-radius:999px; }
+.footer { padding-bottom:34px; }
+button, a, summary { -webkit-tap-highlight-color:transparent; }
+:focus-visible { outline:3px solid rgba(83,109,245,.42); outline-offset:3px; }
+
+/* Dark appearance */
+html[data-theme="dark"] { color-scheme:dark; }
+html[data-theme="dark"] body { background:#101522; color:#e8ecf7; }
+html[data-theme="dark"] {
+  --bg:#101522; --paper:#191f2e; --ink:#e8ecf7; --muted:#9aa5ba;
+  --green:#9aa8ff; --green2:#252d4a; --green3:#343e67; --line:#2b3447;
+  --sand:#292538; --gold:#f0bd7b; --gold-bg:#30291f;
+  --warn:#e9ad62; --warn-bg:#33291e; --shadow:0 8px 26px rgba(0,0,0,.2);
+}
+html[data-theme="dark"] .navwrap { background:rgba(19,25,39,.88); border-color:#2b3447; }
+html[data-theme="dark"] .day-btn { background:#242c3e; color:#b8c1d5; }
+html[data-theme="dark"] .day-btn.active { background:#687cf5; border-color:#687cf5; color:#fff; }
+html[data-theme="dark"] .day-btn.info-btn { background:#292744; color:#b9b3ff; border-color:#46416f; }
+html[data-theme="dark"] .day-btn.info-btn.active { background:#7169d9; color:#fff; }
+html[data-theme="dark"] .dayheading h1,
+html[data-theme="dark"] .stop-title strong { color:#edf0fa; }
+html[data-theme="dark"] .dayheading span,
+html[data-theme="dark"] h3 { color:#a6b1ff; }
+html[data-theme="dark"] .dayintro,
+html[data-theme="dark"] .dayintro p { color:#c0c8d8; }
+html[data-theme="dark"] .stop { background:#191f2e; border-color:#2b3447; box-shadow:0 3px 13px rgba(0,0,0,.12); }
+html[data-theme="dark"] .stop:has(details[open]) { border-color:#5968b8; }
+html[data-theme="dark"] .num { background:#2a3152; color:#b3bdff; }
+html[data-theme="dark"] .chev { background:#293145; color:#aab4ca; }
+html[data-theme="dark"] .badge-time { background:#292f50; color:#bdc5ff; }
+html[data-theme="dark"] .badge-map { background:#1d3835; color:#8dd9c4; border-color:#2d514b; }
+html[data-theme="dark"] .day-photo figcaption { background:#191f2e; }
+html[data-theme="dark"] .tags span { background:#292f50; color:#c0c8ff; }
+html[data-theme="dark"] .metrics div { background:#252d49; }
+html[data-theme="dark"] .metrics b { color:#b4beff; }
+html[data-theme="dark"] .status { background:#292f50; color:#c0c8ff; }
+html[data-theme="dark"] .tipline { background:#302a20; color:#f0d4aa; border-color:#b98545; }
+html[data-theme="dark"] .paid-warning,
+html[data-theme="dark"] .paid-warn { background:#33291e; color:#f1d2a8; border-color:#d39a51; }
+html[data-theme="dark"] .stop-content { border-color:#2b3447; }
+html[data-theme="dark"] .day-btn:focus-visible,
+html[data-theme="dark"] button:focus-visible { outline-color:#9eabff; }
+html[data-theme="dark"] .smallnote,
+html[data-theme="dark"] .footer { color:#9aa5ba; }
+@media (max-width:649px) {
+  header { padding:18px 15px 20px; }
+  .brandline strong { font-size:30px; }
+  .brand-subtitle { font-size:11px; }
+  .theme-toggle { padding:0 12px; min-height:39px; }
+  .theme-label { display:none; }
+  .navwrap { padding:9px 10px; }
+  .day-btn { min-height:37px; padding:0 13px; font-size:12px; }
+  main { padding:16px 11px 60px; }
+  .dayheading { padding-top:8px; }
+  .dayheading h1 { font-size:27px; line-height:1.14; }
+  .day-photo { margin-top:12px; border-radius:18px; }
+  .stop { border-radius:16px; margin-bottom:10px; }
+  .stop summary { padding:13px 12px; }
+  .stop-content { padding:0 12px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *:before, *:after { scroll-behavior:auto !important; transition:none !important; }
+}
+
+
+/* ISTANBUL FIELD NOTES — playful editorial direction */
+:root {
+  --bg:#fbf7ef; --paper:#fffdf8; --ink:#243b3b; --muted:#71817b;
+  --line:#e8e1d5; --shadow:0 10px 30px rgba(69,74,56,.07);
+  --green:#167b70; --green2:#e3f2eb; --green3:#cde7db;
+  --sand:#f5ead7; --gold:#d28a39; --warn:#bd5d48; --warn-bg:#fff0e9;
+}
+html { scroll-behavior:smooth; }
+body {
+  background:
+    radial-gradient(ellipse at 94% 4%, rgba(246,194,121,.20), transparent 25rem),
+    radial-gradient(ellipse at 0% 20%, rgba(117,190,167,.13), transparent 24rem),
+    var(--bg);
+  color:var(--ink);
+}
+header {
+  padding:26px 20px 19px;
+  background:transparent;
+}
+.header-inner { max-width:1040px; margin:auto; }
+.brandline { display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.brand-copy { position:relative; padding-left:3px; }
+.brand-copy:after {
+  content:""; position:absolute; width:76px; height:76px; border:1.5px dashed rgba(22,123,112,.26);
+  border-radius:50%; right:-91px; top:5px; transform:rotate(-18deg);
+}
+.brand-copy:before {
+  content:""; position:absolute; width:9px; height:9px; border-radius:50%; background:#e28c61;
+  right:-49px; top:0; box-shadow:0 0 0 5px rgba(226,140,97,.13);
+}
+.eyebrow { color:#b16b47; font-size:10px; font-weight:800; letter-spacing:.19em; }
+.brandline strong {
+  display:block; color:#203d3b; font-family:Georgia, "Times New Roman", serif;
+  font-weight:500; font-size:clamp(38px,6vw,56px); letter-spacing:-.055em; line-height:1.02;
+}
+.brand-dot { color:#e28c61; }
+.brand-subtitle { display:block; color:#7a8980; font-size:13px; margin-top:7px; letter-spacing:.01em; }
+.theme-toggle {
+  border:1px solid #e5ddce; background:rgba(255,253,248,.78); color:#47625c;
+  border-radius:50px; min-height:42px; padding:0 15px; box-shadow:0 4px 12px rgba(65,70,55,.05);
+}
+.navwrap {
+  position:sticky; top:0; z-index:30; max-width:100%;
+  background:rgba(251,247,239,.88); border:0; border-top:1px solid rgba(220,210,193,.55);
+  border-bottom:1px solid rgba(220,210,193,.75); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  padding:8px max(12px, calc((100vw - 1040px)/2));
+}
+.menu-grid { max-width:1040px; margin:auto; }
+.day-btns {
+  display:flex; align-items:center; justify-content:flex-start; gap:7px;
+  overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; padding:1px 1px 3px;
+}
+.day-btns::-webkit-scrollbar { display:none; }
+.day-btn {
+  flex:0 0 36px; width:36px; height:36px; min-height:36px; padding:0;
+  border:1px solid #e8dfd0; border-radius:50%; background:#fffdf8; color:#75837b;
+  font-size:12px; font-weight:750; box-shadow:none; transition:transform .18s, background .18s;
+}
+.day-btn:active { transform:scale(.92); }
+.day-btn.active {
+  background:#e17f5d; border-color:#e17f5d; color:white;
+  box-shadow:0 5px 13px rgba(225,127,93,.24);
+}
+.day-btn.info-btn {
+  margin-left:auto; flex-basis:36px; border-radius:50%; background:#e4f0e8;
+  color:#267b6b; border-color:#d2e4d7; font-family:Georgia,serif; font-style:italic; font-size:17px;
+}
+.day-btn.info-btn.active { background:#277c70; border-color:#277c70; color:#fff; }
+main { max-width:900px; padding:24px 20px 90px; }
+.dayheading { position:relative; padding:17px 3px 10px; }
+.dayheading span { color:#c17753; letter-spacing:.18em; font-size:10px; font-weight:800; }
+.dayheading h1 {
+  color:#243b3b; font-family:Georgia, "Times New Roman", serif; font-weight:500;
+  font-size:clamp(31px,5vw,45px); letter-spacing:-.045em; line-height:1.08; margin:8px 0 10px;
+}
+.dayheading:after {
+  content:""; display:block; width:58px; height:3px; border-radius:3px; margin-top:16px;
+  background:linear-gradient(90deg,#e28c61 0 58%,#82b8a1 58% 100%);
+}
+.info-lede { max-width:650px; color:#71817b; line-height:1.65; margin:0 2px 18px; font-size:14px; }
+.dayintro { color:#526a62; max-width:760px; font-size:15px; line-height:1.75; }
+.dayintro p { color:inherit; }
+.primary-link {
+  border-radius:12px 24px 24px 24px; padding:12px 17px; background:#287c70;
+  box-shadow:0 7px 17px rgba(40,124,112,.18); transition:transform .18s;
+}
+.primary-link:active { transform:scale(.98); }
+.day-photo {
+  border-radius:7px 28px 7px 28px; box-shadow:0 15px 35px rgba(51,65,50,.13);
+  overflow:hidden; transform:rotate(-.35deg); margin:20px 0 27px;
+}
+.day-photo img { height:clamp(215px,38vw,365px); }
+.day-photo figcaption { background:#fffdf8; color:#78877e; padding:9px 14px; font-size:11px; }
+.points > h2 {
+  color:#9a8066; font-family:Georgia,serif; font-weight:500; letter-spacing:.05em;
+  text-transform:none; font-size:22px; margin:28px 0 13px;
+}
+.stop {
+  border:1px solid #ece5d9; border-radius:17px 17px 17px 5px;
+  background:rgba(255,253,248,.91); box-shadow:0 4px 17px rgba(56,67,53,.045);
+  margin:0 0 11px; overflow:hidden; transition:border-color .2s, box-shadow .2s;
+}
+.stop:has(details[open]) { border-color:#d8a88f; box-shadow:0 9px 24px rgba(89,79,57,.09); }
+.stop summary { padding:14px 15px; min-height:66px; gap:12px; }
+.num {
+  border-radius:50%; background:#e7f1e9; color:#33796b; flex-basis:35px; height:35px;
+  font-size:11px; font-weight:800;
+}
+.stop-title strong { color:#2a4540; letter-spacing:-.02em; font-size:15px; }
+.stop-title .tr-name { color:#9a9e91; font-size:11px; margin-top:3px; }
+.chev {
+  width:28px; height:28px; display:grid; place-items:center; border-radius:50%;
+  background:#f5eee3; color:#a6785a; font-size:15px;
+}
+.stop-content { padding:0 16px 19px; color:#50655e; line-height:1.72; }
+.stop-content h3 { color:#b56d4c; font-family:Georgia,serif; font-size:17px; font-weight:600; margin:18px 0 5px; }
+.stop-content p { margin:8px 0 12px; }
+.badge { border-radius:7px 18px 18px 18px; padding:7px 11px; font-size:11px; font-weight:700; }
+.badge-time { background:#f8eddf; color:#a36a42; }
+.badge-map { background:#e8f3ed; color:#287b6c; border:1px solid #d5e8dc; }
+.photo-grid { gap:8px; border-radius:13px; }
+.photo-grid img { border-radius:9px 19px 9px 19px; }
+.tipline, .paid-warning, .paid-warn {
+  border-radius:5px 15px 15px 5px; padding:12px 14px; border-left-width:3px;
+}
+.tags span { background:#e7f1e9; color:#39786b; border-radius:20px; }
+.card, .info-card {
+  border-radius:8px 22px 8px 22px; border:1px solid #ebe3d7;
+  background:rgba(255,253,248,.93); box-shadow:0 7px 22px rgba(66,69,52,.055);
+}
+.info-card { padding:21px 22px; margin:0 0 15px; }
+.info-card h2 {
+  color:#294942; font-family:Georgia,serif; font-size:22px; font-weight:500;
+  letter-spacing:-.025em; margin:0 0 13px; display:flex; align-items:center; gap:9px;
+}
+.info-card h2:before {
+  content:""; width:8px; height:8px; border-radius:50%; background:#e18a63;
+  box-shadow:0 0 0 5px rgba(225,138,99,.12); flex:0 0 8px;
+}
+.info-card h3 { color:#b56d4c; font-family:Georgia,serif; font-size:16px; margin:18px 0 6px; }
+.info-card p, .info-card li { color:#536a62; font-size:14px; line-height:1.75; }
+.info-card ul { padding-left:20px; }
+.info-card li { padding-left:3px; margin:5px 0; }
+.info-card a { color:#237c70; text-decoration-thickness:1px; text-underline-offset:3px; }
+.source-note { font-size:12px !important; color:#89958a !important; border-top:1px dashed #e5dccc; padding-top:12px; }
+.phrase-list { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+.phrase-list p { display:flex; flex-direction:column; border-bottom:1px dashed #e8e0d4; padding:8px 0; margin:0; }
+.phrase-list b { color:#287b6c; }
+.phrase-list span { color:#7e8d84; font-size:12px; }
+.metrics div { background:#e8f1e9; border-radius:9px 18px 9px 18px; }
+.metrics b { color:#267a6d; }
+.status { color:#267a6d; background:#e5f1e9; border-radius:20px; }
+.footer { color:#8b948a; padding-bottom:30px; }
+.route-card {
+  border:1px dashed #d9b79e; background:#fff8ef;
+  border-radius:8px 20px 8px 20px; position:relative;
+}
+.route-card:before {
+  content:""; position:absolute; left:32px; top:0; bottom:0; border-left:1px dashed rgba(190,128,91,.22); pointer-events:none;
+}
+.route-card summary { min-height:58px; }
+.route-card .num { background:#f7e5d6; color:#b56d4c; }
+.route-card .stop-title strong { color:#9d6244; }
+.route-card .stop-content { color:#6d6457; }
+.route-card .badge-time { background:#f8e8d8; color:#a76c43; }
+.route-card .badge-map { background:#e7f1e9; }
+html[data-theme="dark"] {
+  --bg:#172522; --paper:#202f2b; --ink:#edf2e9; --muted:#a5b5aa;
+  --line:#3a4a43; --green:#9bc9b6; --green2:#293d36; --green3:#354e43;
+  --sand:#3a342b; --gold:#e9b879; --warn:#f0a18b; --warn-bg:#44302b;
+  --shadow:0 9px 25px rgba(0,0,0,.22);
+}
+html[data-theme="dark"] body {
+  background:radial-gradient(ellipse at 95% 3%,rgba(183,126,87,.12),transparent 25rem),var(--bg);
+  color:#eaf0e8;
+}
+html[data-theme="dark"] header { background:transparent; }
+html[data-theme="dark"] .brandline strong, html[data-theme="dark"] .dayheading h1 { color:#f0f1e8; }
+html[data-theme="dark"] .brand-subtitle, html[data-theme="dark"] .dayintro { color:#b4c3b8; }
+html[data-theme="dark"] .navwrap { background:rgba(23,37,34,.9); border-color:#394a42; }
+html[data-theme="dark"] .day-btn { background:#293b35; color:#bfd0c5; border-color:#41544b; }
+html[data-theme="dark"] .day-btn.active { background:#d47c5e; border-color:#d47c5e; color:white; }
+html[data-theme="dark"] .day-btn.info-btn { background:#2d4b41; color:#b8d9ca; }
+html[data-theme="dark"] .day-btn.info-btn.active { background:#287b70; color:white; }
+html[data-theme="dark"] .theme-toggle { background:#293b35; color:#d5e4da; border-color:#41544b; }
+html[data-theme="dark"] .stop, html[data-theme="dark"] .info-card, html[data-theme="dark"] .card {
+  background:#202f2b; border-color:#394a42; box-shadow:0 5px 18px rgba(0,0,0,.16);
+}
+html[data-theme="dark"] .stop-title strong, html[data-theme="dark"] .info-card h2 { color:#edf2e9; }
+html[data-theme="dark"] .stop-title .tr-name, html[data-theme="dark"] .info-card p, html[data-theme="dark"] .info-card li,
+html[data-theme="dark"] .stop-content { color:#c1d0c5; }
+html[data-theme="dark"] .info-card h3, html[data-theme="dark"] .stop-content h3 { color:#e2a07d; }
+html[data-theme="dark"] .num { background:#304a3e; color:#b7d9c7; }
+html[data-theme="dark"] .chev { background:#3a4037; color:#e2b68f; }
+html[data-theme="dark"] .badge-time { background:#493c30; color:#f0c49a; }
+html[data-theme="dark"] .badge-map { background:#29483d; color:#b5dfca; border-color:#3a5a4c; }
+html[data-theme="dark"] .route-card { background:#302d27; border-color:#775c49; }
+html[data-theme="dark"] .route-card .num { background:#4a3b30; color:#f0bd98; }
+html[data-theme="dark"] .route-card .stop-title strong { color:#efb18e; }
+html[data-theme="dark"] .route-card .stop-content { color:#d7c8b7; }
+html[data-theme="dark"] .info-card a { color:#9bd1b8; }
+html[data-theme="dark"] .source-note { color:#a0b0a5 !important; border-color:#45554a; }
+html[data-theme="dark"] .phrase-list b { color:#a4d3bb; }
+html[data-theme="dark"] .phrase-list span { color:#aebeb3; }
+html[data-theme="dark"] .day-photo figcaption { background:#202f2b; color:#b5c2b7; }
+html[data-theme="dark"] .dayheading span { color:#e6a17f; }
+html[data-theme="dark"] .info-lede { color:#b4c3b8; }
+html[data-theme="dark"] .tipline, html[data-theme="dark"] .paid-warning, html[data-theme="dark"] .paid-warn {
+  background:#44352b; color:#f1d0af; border-color:#bd875f;
+}
+html[data-theme="dark"] .footer { color:#9eafa3; }
+@media(max-width:650px) {
+  header { padding:19px 16px 14px; }
+  .brand-copy:after { width:57px; height:57px; right:-66px; top:3px; }
+  .brand-copy:before { right:-38px; top:1px; }
+  .brandline strong { font-size:40px; }
+  .brand-subtitle { font-size:11px; margin-top:5px; }
+  .theme-toggle { min-height:38px; width:38px; padding:0; display:grid; place-items:center; }
+  .theme-label { display:none; }
+  .navwrap { padding:6px 11px; }
+  .day-btns { gap:4px; }
+  .day-btn { flex-basis:28px; width:28px; height:28px; min-height:28px; font-size:10px; }
+  .day-btn.info-btn { flex-basis:28px; width:28px; }
+  main { padding:17px 13px 85px; }
+  .dayheading { padding:12px 2px 7px; }
+  .dayheading h1 { font-size:31px; }
+  .dayintro { font-size:14px; line-height:1.68; }
+  .day-photo { margin:15px 0 23px; }
+  .stop { margin-bottom:9px; }
+  .stop summary { min-height:61px; padding:12px 11px; }
+  .stop-content { padding:0 12px 16px; font-size:14px; }
+  .info-card { padding:17px 16px; }
+  .info-card h2 { font-size:20px; }
+  .phrase-list { grid-template-columns:1fr; }
+}
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+
+/* ── URBAN EXPLORER: graphite / white / lime / electric blue ── */
+:root {
+  color-scheme: light;
+  --bg: #F3F5F7;
+  --paper: #FFFFFF;
+  --ink: #111827;
+  --muted: #667085;
+  --green: #2563EB;
+  --green2: #EAF1FF;
+  --green3: #C8D8FF;
+  --line: #DCE2EA;
+  --sand: #F4F6F8;
+  --gold: #2563EB;
+  --gold-bg: #EFF4FF;
+  --warn: #B45309;
+  --warn-bg: #FFF4E5;
+  --shadow: 0 8px 24px rgba(17,24,39,.07);
+  --radius: 15px;
+}
+html { scroll-padding-top: 82px; }
+body { background: var(--bg); color: var(--ink); }
+a { color: #1D4ED8; }
+header {
+  color: #fff;
+  background: #111827;
+  padding: 15px 18px 17px;
+  border-bottom: 4px solid #B7F34A;
+}
+header:after { display: none; }
+.header-inner { max-width: 1040px; }
+.brandline { align-items: center; justify-content: space-between; gap: 12px; }
+.brand-copy { display: flex; flex-direction: column; gap: 3px; }
+.eyebrow { color: #B7F34A; letter-spacing: .16em; font-size: 9px; }
+.brandline strong { color: #fff; font-size: 27px; line-height: 1.05; letter-spacing: -.045em; }
+.brand-dot { color: #B7F34A; }
+.theme-toggle {
+  border: 1px solid rgba(255,255,255,.24);
+  background: #202B3D;
+  color: #fff;
+  border-radius: 11px;
+  min-height: 40px;
+  padding: 8px 12px;
+  font: 700 12px Inter, system-ui, sans-serif;
+}
+.theme-toggle:active { background: #2C3B52; }
+.navwrap {
+  background: rgba(255,255,255,.94);
+  border-bottom: 1px solid #DCE2EA;
+  box-shadow: 0 4px 14px rgba(17,24,39,.035);
+}
+.menu-field select {
+  border-color: #C9D2DF;
+  border-radius: 10px;
+  color: #111827;
+}
+.day-btn {
+  border: 1px solid #C9D2DF;
+  background: #fff;
+  color: #263244;
+  border-radius: 10px;
+  font-weight: 750;
+}
+.day-btn.active {
+  background: #B7F34A;
+  border-color: #B7F34A;
+  color: #111827;
+}
+.day-btn.info-btn { border-color: #2563EB; color: #1D4ED8; }
+.day-btn.info-btn.active { background: #2563EB; border-color: #2563EB; color: #fff; }
+.dayheading span { color: #1D4ED8; }
+.dayheading h1 { color: #111827; }
+.dayintro p { color: #475467; }
+.primary-link {
+  background: #2563EB;
+  box-shadow: 0 4px 12px rgba(37,99,235,.20);
+  border-radius: 10px;
+}
+.stop, .card, .info-card {
+  border-color: #DCE2EA;
+  box-shadow: 0 3px 12px rgba(17,24,39,.045);
+}
+.stop { border-radius: 13px; }
+.num { background: #EAF1FF; color: #1D4ED8; border-radius: 9px; }
+.stop-title strong { color: #111827; }
+.chev { color: #2563EB; }
+.badge-time { background: #EAF7D6; color: #31520B; }
+.badge-map { background: #EFF4FF; color: #1D4ED8; border-color: #D6E3FF; }
+.paid-warning { background: #FFF4E5; border-left-color: #F59E0B; color: #854D0E; }
+h3 { color: #1D4ED8; }
+.tipline { background: #EFF4FF; border-left-color: #2563EB; color: #263B62; }
+.tags span { background: #EEF2F6; color: #344054; }
+.status { background: #EAF7D6; color: #31520B; }
+.metrics div { background: #EEF2F6; border: 1px solid #DCE2EA; }
+.metrics b { color: #1D4ED8; }
+.footer { color: #667085; }
+
+/* Dark theme */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0B1220;
+  --paper: #131D2D;
+  --ink: #F2F5F9;
+  --muted: #A0AEC0;
+  --green: #78A7FF;
+  --green2: #1D3152;
+  --green3: #2A4674;
+  --line: #29374B;
+  --sand: #1B2637;
+  --gold: #78A7FF;
+  --gold-bg: #1A2B46;
+  --warn: #F5B84B;
+  --warn-bg: #352A1A;
+  --shadow: 0 8px 24px rgba(0,0,0,.22);
+}
+:root[data-theme="dark"] body { background: var(--bg); color: var(--ink); }
+:root[data-theme="dark"] header { background: #080E18; border-bottom-color: #B7F34A; }
+:root[data-theme="dark"] .navwrap { background: rgba(15,23,42,.96); border-color: #29374B; }
+:root[data-theme="dark"] .menu-field span { color: #A0AEC0; }
+:root[data-theme="dark"] .menu-field select,
+:root[data-theme="dark"] .day-btn { background-color: #131D2D; color: #F2F5F9; border-color: #34445C; }
+:root[data-theme="dark"] .day-btn.active { background: #B7F34A; color: #111827; border-color: #B7F34A; }
+:root[data-theme="dark"] .day-btn.info-btn { color: #9ABEFF; border-color: #527CCB; }
+:root[data-theme="dark"] .day-btn.info-btn.active { background: #2563EB; color: #fff; }
+:root[data-theme="dark"] .dayheading h1,
+:root[data-theme="dark"] .stop-title strong { color: #F2F5F9; }
+:root[data-theme="dark"] .dayintro p { color: #C0CAD8; }
+:root[data-theme="dark"] .stop,
+:root[data-theme="dark"] .card,
+:root[data-theme="dark"] .info-card { background: #131D2D; border-color: #29374B; }
+:root[data-theme="dark"] .num,
+:root[data-theme="dark"] .badge-map,
+:root[data-theme="dark"] .tags span,
+:root[data-theme="dark"] .metrics div { background: #1D2A3D; color: #C9D8F2; border-color: #34445C; }
+:root[data-theme="dark"] .badge-time { background: #26391E; color: #D3F59B; }
+:root[data-theme="dark"] .tipline { background: #1A2B46; color: #D5E2FA; border-left-color: #78A7FF; }
+:root[data-theme="dark"] .paid-warning { background: #352A1A; color: #F8D89B; border-left-color: #F5B84B; }
+:root[data-theme="dark"] .metrics b { color: #9ABEFF; }
+:root[data-theme="dark"] .footer { color: #A0AEC0; }
+:root[data-theme="dark"] .stop-content { border-top-color: #29374B; }
+:root[data-theme="dark"] .theme-toggle { background: #1D2A3D; border-color: #34445C; }
+@media (max-width: 649px) {
+  header { padding: 12px 14px 14px; }
+  .brandline strong { font-size: 24px; }
+  .theme-toggle { min-height: 38px; padding: 7px 10px; }
+  .day-btn { min-height: 39px; padding: 8px 10px; }
+}
+
+.return-stop { border: 2px solid #B7F34A; box-shadow: 0 5px 18px rgba(17,24,39,.08); }
+.return-stop > details > summary { background: #F7FBEF; }
+:root[data-theme="dark"] .return-stop > details > summary { background: #1D2A3D; }
 </style></head><body>
-<header><div class="header-inner"><div class="brandline"><span class="eyebrow">Личный путеводитель · 2027</span><strong>Стамбул</strong></div></div></header>
+<header><div class="header-inner"><div class="brandline"><div class="brand-copy"><span class="eyebrow">ПУТЕВОДИТЕЛЬ · 2027</span><strong>Стамбул<span class="brand-dot">.</span></strong></div><button aria-label="Включить тёмную тему" class="theme-toggle" id="themeToggle" title="Сменить тему" type="button"><span aria-hidden="true" class="theme-icon">☾</span><span class="theme-label">Тема</span></button></div></div></header>
 <div class="navwrap">
 <div class="menu-grid">
-<div class="day-btns" role="navigation" aria-label="Дни поездки">
-<button type="button" class="day-btn active" data-day="day-1">День 1</button>
-<button type="button" class="day-btn" data-day="day-2">День 2</button>
-<button type="button" class="day-btn" data-day="day-3">День 3</button>
-<button type="button" class="day-btn" data-day="day-4">День 4</button>
-<button type="button" class="day-btn" data-day="day-5">День 5</button>
-<button type="button" class="day-btn" data-day="day-6">День 6</button>
-<button type="button" class="day-btn" data-day="day-7">День 7</button>
-<button type="button" class="day-btn" data-day="day-8">День 8</button>
-<button type="button" class="day-btn" data-day="day-9">День 9</button>
-<button type="button" class="day-btn" data-day="day-10">День 10</button>
-<button type="button" class="day-btn info-btn" data-day="extra">Инфо</button>
+<div aria-label="Дни поездки" class="day-btns" role="navigation">
+<button aria-label="День 1" class="day-btn active" data-day="day-1" title="День 1" type="button">01</button>
+<button aria-label="День 2" class="day-btn" data-day="day-2" title="День 2" type="button">02</button>
+<button aria-label="День 3" class="day-btn" data-day="day-3" title="День 3" type="button">03</button>
+<button aria-label="День 4" class="day-btn" data-day="day-4" title="День 4" type="button">04</button>
+<button aria-label="День 5" class="day-btn" data-day="day-5" title="День 5" type="button">05</button>
+<button aria-label="День 6" class="day-btn" data-day="day-6" title="День 6" type="button">06</button>
+<button aria-label="День 7" class="day-btn" data-day="day-7" title="День 7" type="button">07</button>
+<button aria-label="День 8" class="day-btn" data-day="day-8" title="День 8" type="button">08</button>
+<button aria-label="День 9" class="day-btn" data-day="day-9" title="День 9" type="button">09</button>
+<button aria-label="День 10" class="day-btn" data-day="day-10" title="День 10" type="button">10</button>
+<button aria-label="Полезная информация" class="day-btn info-btn" data-day="extra" title="Полезная информация" type="button">i</button>
 </div>
 </div>
 </div>
@@ -535,19 +1100,19 @@ details[open] .photo-grid {
 <p><b>Византийский Константинополь и османский Стамбул.</b> Главные памятники исторического полуострова: ранневизантийские храмы, императорские мечети, старинные рынки, парк Гюльхане и набережная Золотого Рога.</p>
 <p>В Айя-Софию в этот день не заходим: осматриваем её.</p>
 <a class="primary-link" href="https://yandex.ru/maps/-/CXrKF269" rel="noopener" target="_blank">Открыть маршрут в Яндекс Картах</a>
-</div><figure class="day-photo"><img alt="Голубая мечеть — один из главных архитектурных ориентиров исторического центра" decoding="async" width="1200" height="800" src="https://www.kupibilet.ru/kland-storage/images/670x0/30x30/attractions/tr/istanbul/the-blue-mosque/af0fbb4e-ad35-42d0-9eca-3e726067ea83.webp"/><figcaption>Фото: Wikimedia Commons, CC BY-SA 3.0</figcaption></figure>
+</div><figure class="day-photo"><img alt="Голубая мечеть — один из главных архитектурных ориентиров исторического центра" decoding="async" height="800" src="https://www.kupibilet.ru/kland-storage/images/670x0/30x30/attractions/tr/istanbul/the-blue-mosque/af0fbb4e-ad35-42d0-9eca-3e726067ea83.webp" width="1200"/><figcaption>Фото: Wikimedia Commons, CC BY-SA 3.0</figcaption></figure>
 <section class="points"><h2>Маршрут</h2>
 <article class="stop stop-transit" id="point-d1-go">
-<details>
+<details class="route-card">
 <summary>
-<span class="num" style="visibility:hidden">00</span>
+<span class="num" style="visibility:hidden">↗</span>
 <span class="stop-title"><strong>Как доехать</strong><span class="tr-name">[к старту дня 1]</span></span>
 <span aria-hidden="true" class="chev">⌄</span>
 </summary>
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">В пути: 10–20 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.972241%2C41.002754&z=16&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.972241%2C41.002754&amp;z=16&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <p>Старт у Малой Айя-Софии. Из отеля (Аксарай / Laleli) — пешком 10–20 мин через район Кучукаясофья или трамвай <b>T1</b> до <b>Sultanahmet</b> / <b>Çemberlitaş</b> и короткий подход.</p>
 </div>
@@ -556,8 +1121,8 @@ details[open] .photo-grid {
 <article class="stop" id="point-back-1">
 <details>
 <summary>
-<span class="num" style="visibility:hidden">00</span>
-<span class="stop-title"><strong>Как вернуться</strong><span class="tr-name">[к отелю, Аксарай]</span></span>
+<span class="num" style="visibility:hidden">01</span>
+<span class="stop-title"><strong>Малая Айя-София</strong><span class="tr-name">[Küçük Ayasofya Camii]</span></span>
 <span aria-hidden="true" class="chev">⌄</span>
 </summary>
 <div class="stop-content">
@@ -566,7 +1131,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.972241%2C41.002754&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Малая Айя-София" decoding="async" width="900" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sergius_and_Bacchus.jpg?width=900"/>
+<img alt="Малая Айя-София" decoding="async" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sergius_and_Bacchus.jpg?width=900" width="900"/>
 </div>
 <div class="paid-warn"><strong>Вход:</strong> верхняя галерея для туристов ≈ 25 € (оплата в евро) / ориентир ≈ 900–1100 ₺ · ≈ 1575–1925 ₽; молитвенный зал для молящихся бесплатно</div>
 <h3>История</h3>
@@ -593,7 +1158,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.974201%2C41.004018&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Ипподром Константинополя" decoding="async" width="900" height="600" src="https://live.staticflickr.com/2940/33837031855_77f4d4616b_b.jpg"/>
+<img alt="Ипподром Константинополя" decoding="async" height="600" src="https://live.staticflickr.com/2940/33837031855_77f4d4616b_b.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>Ипподром заложили ещё в римскую эпоху, а при Константине Великом в 330-х годах его значительно расширили — именно тогда Константинополь стал новой столицей империи. Арена вмещала десятки тысяч зрителей: здесь проходили гонки колесниц, императорские церемонии и самые крупные городские события. В 532 году во время восстания Ника на ипподроме собралась толпа, и именно отсюда началось одно из самых кровавых восстаний в истории города. После 1453 года османы постепенно изменили функцию пространства, но вытянутый план древней арены до сих пор читается в современной площади Атмейданы.</p>
@@ -619,7 +1184,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.977023%2C41.005251&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Голубая мечеть" decoding="async" width="900" height="600" src="https://www.kupibilet.ru/kland-storage/images/670x0/30x30/attractions/tr/istanbul/the-blue-mosque/af0fbb4e-ad35-42d0-9eca-3e726067ea83.webp"/>
+<img alt="Голубая мечеть" decoding="async" height="600" src="https://www.kupibilet.ru/kland-storage/images/670x0/30x30/attractions/tr/istanbul/the-blue-mosque/af0fbb4e-ad35-42d0-9eca-3e726067ea83.webp" width="900"/>
 </div>
 <h3>История</h3>
 <p>Мечеть построили по приказу султана Ахмеда I в 1609–1616 годах. Архитектор Седефкар Мехмед-ага был учеником и продолжателем школы Мимара Синана. Комплекс сразу задумывался как императорский: помимо самой мечети здесь появились медресе, больница, кухня, караван-сарай и мавзолей. Здание стало одним из главных символов османского Стамбула и до сих пор формирует панораму Султанахмета вместе с Айя-Софией. Название «Голубая» появилось в европейской традиции из-за обилия изникских плиток в интерьере; сами турки обычно называют её просто Sultanahmet Camii.</p>
@@ -644,10 +1209,8 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 15–25 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.980024%2C41.008518&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Айя-София" decoding="async" width="900" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hagia_Sophia_Mars_2013.jpg?width=900"/>
+<img alt="Айя-София" decoding="async" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hagia_Sophia_Mars_2013.jpg?width=900" width="900"/>
 </div>
 <div class="paid-warn"><strong>Вход:</strong> верхняя галерея для туристов ≈ 25 € (оплата в евро) / ориентир ≈ 900–1100 ₺ · ≈ 1575–1925 ₽; молитвенный зал для молящихся бесплатно</div>
 <h3>История</h3>
@@ -673,10 +1236,8 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 25–45 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.981501%2C41.013430&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Парк Гюльхане" decoding="async" width="900" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/G%C3%BClhane_Park.jpg?width=900"/>
+<img alt="Парк Гюльхане" decoding="async" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/G%C3%BClhane_Park.jpg?width=900" width="900"/>
 </div>
 <h3>История</h3>
 <p>Парк Гюльхане занимает территорию внешних садов дворца Топкапы. Название происходит от розовых садов (gül — роза), которые разбивали здесь ещё в османское время. До начала XX века это была закрытая дворцовая зона. В 1912 году пространство открыли для публики и превратили в один из первых общественных парков современного Стамбула. С тех пор он остаётся важным «зелёным» коридором между Султанахметом и набережной Золотого Рога.</p>
@@ -698,10 +1259,8 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 45–90 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.968070%2C41.010611&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Гранд-базар" decoding="async" width="900" height="600" src="https://fs.tonkosti.ru/bo/pr/boprrvflhuogwow48sw4w0k8g.jpg"/>
+<img alt="Гранд-базар" decoding="async" height="600" src="https://fs.tonkosti.ru/bo/pr/boprrvflhuogwow48sw4w0k8g.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>История Гранд-базара начинается сразу после османского завоевания Константинополя. Первое ядро — крытый бедестен (торговый зал) — построили по распоряжению Мехмеда II в 1461 году. Вокруг него постепенно вырос огромный лабиринт торговых улиц, караван-сараев (ханов) и крытых галерей. Комплекс неоднократно горел и страдал от землетрясений, но каждый раз восстанавливался и расширялся. К XIX веку это был уже целый торговый квартал под крышей — один из крупнейших крытых рынков мира.</p>
@@ -723,10 +1282,8 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 15–25 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.965439%2C41.010198&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Мечеть Баязид" decoding="async" width="900" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Beyaz%C4%B1tCami1.jpg?width=900"/>
+<img alt="Мечеть Баязид" decoding="async" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Beyaz%C4%B1tCami1.jpg?width=900" width="900"/>
 </div>
 <h3>История</h3>
 <p>Императорскую мечеть заказал султан Баязид II; строительные надписи указывают на 1501–1505 годы. Это один из важных переходных памятников от ранней османской архитектуры к зрелой классической традиции. Вокруг мечети сформировался большой комплекс (külliye) с медресе, имаретом, хаммамом и другими учреждениями. Здание стоит рядом с площадью Баязид и старым университетским кварталом.</p>
@@ -748,10 +1305,8 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 20–30 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.957308%2C41.013775&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Мечеть Шехзаде" decoding="async" width="900" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/%C5%9Eehzade_Mosque.jpg?width=900"/>
+<img alt="Мечеть Шехзаде" decoding="async" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/%C5%9Eehzade_Mosque.jpg?width=900" width="900"/>
 </div>
 <h3>История</h3>
 <p>Султан Сулейман Великолепный заказал мечеть в память о сыне шехзаде Мехмеде, умершем в 1543 году. Строительство шло в 1543–1548 годах. Это одна из первых крупных императорских работ Мимара Синана; сам архитектор позднее называл её своим «ученическим» произведением. Здесь он уже отработал схему центрального купола с четырьмя полукуполами, которую позже довёл до совершенства в Сулеймание и Селимие. В саду комплекса — богато украшенная усыпальница шехзаде Мехмеда.</p>
@@ -773,10 +1328,8 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 45–65 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.963980%2C41.016106&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Мечеть Сулеймание и панорамная площадка" decoding="async" width="900" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/S%C3%BCleymaniye_Mosque.jpg?width=900"/>
+<img alt="Мечеть Сулеймание и панорамная площадка" decoding="async" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/S%C3%BCleymaniye_Mosque.jpg?width=900" width="900"/>
 </div>
 <h3>История</h3>
 <p>Комплекс построен по приказу султана Сулеймана Великолепного. Работы над мечетью шли в 1550–1557 годах. Автор проекта — главный османский архитектор Мимар Синан, который считал Сулеймание произведением своей зрелой, «мастерской» стадии. Вокруг мечети располагались медресе, больница, кухня, хаммам, караван-сарай и другие учреждения külliye. За мечетью — мавзолеи Сулеймана и Хюррем-султан; здесь же скромная усыпальница самого Синана. С террас открываются виды на Золотой Рог и Галатскую башню.</p>
@@ -798,10 +1351,8 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 25–45 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.970535%2C41.016576&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Египетский базар" decoding="async" width="900" height="600" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO8Fzr1ISGnDv3iwgPUg6Y8Q77uGcJ9EEPDAcDc1AwVOszx01c9LDru0fr&s=10"/>
+<img alt="Египетский базар" decoding="async" height="600" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO8Fzr1ISGnDv3iwgPUg6Y8Q77uGcJ9EEPDAcDc1AwVOszx01c9LDru0fr&amp;s=10" width="900"/>
 </div>
 <h3>История</h3>
 <p>Египетский базар построили в XVII веке как часть комплекса Новой мечети. Строительство началось в 1660 году по инициативе Турхан Хатидже Валиде-султан и завершилось в 1664 году. Доходы от торговых помещений должны были поддерживать мечеть и благотворительные учреждения. Название «Египетский» закрепилось из-за связи с товарами и доходами из Египта; в ранних источниках его также называли Новым или Валиде-базаром. Сегодня это один из самых атмосферных крытых рынков города.</p>
@@ -823,10 +1374,8 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 15–25 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.972127%2C41.016936&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Новая мечеть" decoding="async" width="900" height="600" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/13/bb/9f/20160501-151538-largejpg.jpg?w=1200&h=-1&s=1"/>
+<img alt="Новая мечеть" decoding="async" height="600" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/13/bb/9f/20160501-151538-largejpg.jpg?w=1200&amp;h=-1&amp;s=1" width="900"/>
 </div>
 <h3>История</h3>
 <p>Строительство Новой мечети начали в 1597 году по инициативе Сафие-султан, матери султана Мехмеда III. После смерти султана проект замер на десятилетия. Его возобновила Турхан Хатидже Валиде-султан, и мечеть завершили в 1660–1665 годах. Она стала архитектурным центром площади Эминёню. Название «Новая» сохранилось с XVII века, хотя зданию уже больше 350 лет. Строительство растянулось примерно на шесть десятилетий и связано с двумя влиятельными женщинами османского двора.</p>
@@ -848,17 +1397,14 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 15–25 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.969428%2C41.018812&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Площадь Эминёню" decoding="async" width="900" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Emin%C3%B6n%C3%BC.jpg?width=900"/>
+<img alt="Площадь Эминёню" decoding="async" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Emin%C3%B6n%C3%BC.jpg?width=900" width="900"/>
 </div>
 <h3>История</h3>
 <p>Эминёню веками был одним из главных торговых и портовых узлов Константинополя и Стамбула. Здесь сходились морские маршруты Золотого Рога, торговые улицы, рынки и дороги к историческому центру. Название связано с османской административной историей района. И сегодня это один из самых оживлённых транспортных и коммерческих узлов города — место, где особенно остро чувствуется связь Стамбула с водой.</p>
 <h3>На что обратить внимание</h3><p>Понаблюдайте за движением паромов, городских жителей и торговцев; рассмотрите фасады Новой мечети и входы Египетского базара. С площади хорошо чувствуется связь города с водой.</p>
 <h3>Интересный факт</h3><p>Название Eminönü связано с османской административной историей района; сегодня оно обозначает исторический узел у южного входа на Галатский мост.</p>
 <h3>Практический совет</h3><p>Следите за вещами в толпе и переходи улицы только по переходам.</p>
-
 <p><strong>Как добраться до отеля</strong> (район Аксарая / Laleli).</p>
 <p>1. С пристани Эюп до Каракёя на пароме по Золотому Рогу (или до Eminönü — смотрите расписание на причале).</p>
 <p>2. Из Каракёя / Eminönü: трамвай <strong>T1</strong> до <strong>Aksaray</strong> или <strong>Yusufpaşa</strong>.</p>
@@ -879,17 +1425,14 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 20–30 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.973191%2C41.020109&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Галатский мост" decoding="async" width="900" height="600" src="https://www.visit-istanbul.info/wp-content/uploads/2021/11/istanbul-gdfdd98e6d_1920.jpg"/>
+<img alt="Галатский мост" decoding="async" height="600" src="https://www.visit-istanbul.info/wp-content/uploads/2021/11/istanbul-gdfdd98e6d_1920.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>Галатский мост соединяет исторический Эминёню с Каракёем через бухту Золотой Рог. Переправы в этом месте существовали в разных формах с XIX века; нынешний разводной мост открыли в 1992–1994 годах. У него два уровня: сверху — транспорт и пешеходы, снизу — кафе и рестораны. Мост стал не только транспортной связью, но и одним из самых узнаваемых общественных пространств города, где можно наблюдать рыбаков, паромы и панораму старого полуострова.</p>
 <h3>На что обратить внимание</h3><p>Посмотрите на рыбаков вдоль перил, паромы и лодки под мостом, силуэты мечетей старого города и Галатскую башню. На нижнем уровне находятся кафе и рестораны, верхний — место прогулки и рыбалки.</p>
 <h3>Интересный факт</h3><p>Мост имеет два уровня: транспорт и пешеходы движутся сверху, а под ним расположены заведения. Это редкое место, где можно одновременно наблюдать повседневную жизнь города и панораму исторического полуострова.</p>
 <h3>Практический совет</h3><p>На мосту бывает ветрено; особенно в феврале стоит иметь верхний слой одежды.</p>
-
 <p><strong>Как добраться до отеля</strong> (район Аксарая / Laleli).</p>
 <p>1. С пристани Эюп до Каракёя на пароме по Золотому Рогу (или до Eminönü — смотрите расписание на причале).</p>
 <p>2. Из Каракёя / Eminönü: трамвай <strong>T1</strong> до <strong>Aksaray</strong> или <strong>Yusufpaşa</strong>.</p>
@@ -910,10 +1453,8 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 10–20 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.976889%2C41.015027&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
-
 <div class="photo-grid photo-single">
-<img alt="Вокзал Сиркеджи" decoding="async" width="900" height="600" src="https://moystambul.ru/wp-content/uploads/2022/01/Sirkeci2.jpg"/>
+<img alt="Вокзал Сиркеджи" decoding="async" height="600" src="https://moystambul.ru/wp-content/uploads/2022/01/Sirkeci2.jpg" width="900"/>
 </div>
 <h3>История</h3><p>Исторический вокзал открылся в 1890 году как европейский терминал железнодорожного сообщения с Константинополем. Его проектировал немецкий архитектор Август Яхмунд. Станция стала конечным пунктом знаменитого Восточного экспресса, связавшего Париж с османской столицей.</p>
 <h3>На что обратить внимание</h3><p>Рассмотрите фасад в ориенталистском стиле, чередование камня и кирпича, арочные окна, башенки и часы. Если здание будет открыто, можно заглянуть внутрь и уточнить доступ к железнодорожному музею.</p>
@@ -923,10 +1464,10 @@ details[open] .photo-grid {
 </details>
 </article>
 <article class="stop" id="point-back-15">
-<details>
+<details class="route-card">
 <summary>
-<span class="num">15</span>
-<span class="stop-title"><strong>Трамвай T1 → отель (Aksaray)</strong><span class="tr-name">[Sirkeci / T1 → Aksaray]</span></span>
+<span class="num">↩</span>
+<span class="stop-title"><strong>Как вернуться</strong><span class="tr-name">[к отелю · Аксарай]</span></span>
 <span aria-hidden="true" class="chev">⌄</span>
 </summary>
 <div class="stop-content">
@@ -934,18 +1475,14 @@ details[open] .photo-grid {
 <span class="badge badge-time">На месте: 25–40 минут с дорогой</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.975777%2C41.014953&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
 <div class="photo-grid photo-single">
-<img alt="Трамвай T1 → отель (Aksaray)" decoding="async" width="900" height="600" src="https://img-fotki.yandex.ru/get/9250/6867402.7e/0_b8bfe_4be4c14_XXL.jpg"/>
+<img alt="Трамвай T1 → отель (Aksaray)" decoding="async" height="600" src="https://img-fotki.yandex.ru/get/9250/6867402.7e/0_b8bfe_4be4c14_XXL.jpg" width="900"/>
 </div>
 <a href="https://yandex.ru/maps/?pt=28.975777%2C41.014953&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
-
 <p class="paid-warning">Трамвай T1: 46,20 ₺ ≈ 83 ₽ на человека (тариф на 04.11.2026). На двоих — 92,40 ₺ ≈ 166 ₽. Оплата только İstanbulkart.</p>
-
 <h3>Как добраться до отеля (подробно)</h3>
 <p><b>Отель:</b> отель в районе Аксарая</p>
-
 <ol>
 <li><b>Найдите остановку T1 у Сиркеджи.</b> Рядом с вокзалом Сиркеджи (Sirkeci Garı) ищите трамвайную платформу линии T1. На табло или указателях должно быть видно направление.</li>
 <li><b>Садитесь только в сторону Bağcılar</b> (Багджылар). Это направление вглубь полуострова через Эминёню → Гюльхане → Султанахмет → Баязид → Лалели → Акcарай. Не садитесь в сторону Kabataş (в сторону Галаты и Бешикташа).</li>
@@ -959,14 +1496,10 @@ details[open] .photo-grid {
 </ul>
 </li>
 </ol>
-
 <p class="tipline"><b>Ориентиры рядом с отелем:</b> рядом Yenikapı (Marmaray и M1), несколько небольших отелей и жилых домов. От остановки Aksaray до двери отеля обычно 5–8 минут спокойным шагом.</p>
-
 <p class="tipline"><b>Важно:</b> İstanbulkart нужна каждому пассажиру. Прикладывайте карту к валидатору при входе в трамвай. Если карта пустая или не сработала — не проходите «за кем-то», иначе штраф.</p>
-
 <h3>Альтернатива</h3>
 <p>Если очень устали или идёт сильный дождь — можно взять такси от Сиркеджи или от Акcарай. Назовите адрес: «Aksaray, Fatih» и покажите отель на карте или покажите на карте. Ориентировочно 150–250 ₺ в зависимости от пробок (проверяйте по таксометру / приложению).</p>
-</div>
 </details>
 </article>
 </section>
@@ -984,17 +1517,17 @@ details[open] .photo-grid {
 <p><b>Возврат в отель:</b> трамвай T1 от Sirkeci до Aksaray (15–20 мин) + 5–10 мин пешком до отеля. Итого транспорт на двоих ≈ 92 ₺ (тариф на 04.11.2026).</p>
 </section>
 </section>
-<section class="day" id="day-2"><div class="dayheading"><span>СТАМБУЛ · ДЕНЬ 02</span><h1>Фатих — Фенер — Балат — Эйюп · от акведука до Золотого Рога</h1></div><div class="dayintro"><p><b>От византийского и османского Фатиха к разноцветному Балату и Золотому Рогу.</b> День начинается с археологии и акведука, проходит через мечеть Фатих, Фенер и Балат, затем выводит к Карие, крепостным стенам и Эйюпу. Финал — холм Пьер Лоти, спуск к пристани и возвращение в отель по воде.</p><p>Маршрут насыщенный и холмистый. Главные акценты — железная церковь, красный греческий лицей, улочки Балата, византийские мозаики Карие и панорама Золотого Рога.</p><a class="primary-link" href="https://yandex.ru/maps/-/CXr1eWjg" rel="noopener" target="_blank">Открыть маршрут в Яндекс Картах ↗</a></div><figure class="day-photo"><img alt="Акведук Валента — римская аркада среди улиц Фатиха" decoding="async" width="400" height="300" src="https://commons.wikimedia.org/wiki/Special:FilePath/AqueductofValensIstanbul.jpg?width=1200"/><figcaption>Фото: Mondo79 / Wikimedia Commons, CC BY-SA</figcaption></figure><section class="points"><h2>Маршрут</h2><article class="stop stop-transit" id="point-d2-go">
-<details>
+<section class="day" id="day-2"><div class="dayheading"><span>СТАМБУЛ · ДЕНЬ 02</span><h1>Фатих — Фенер — Балат — Эйюп · от акведука до Золотого Рога</h1></div><div class="dayintro"><p><b>От византийского и османского Фатиха к разноцветному Балату и Золотому Рогу.</b> День начинается с археологии и акведука, проходит через мечеть Фатих, Фенер и Балат, затем выводит к Карие, крепостным стенам и Эйюпу. Финал — холм Пьер Лоти, спуск к пристани и возвращение в отель по воде.</p><p>Маршрут насыщенный и холмистый. Главные акценты — железная церковь, красный греческий лицей, улочки Балата, византийские мозаики Карие и панорама Золотого Рога.</p><a class="primary-link" href="https://yandex.ru/maps/-/CXr1eWjg" rel="noopener" target="_blank">Открыть маршрут в Яндекс Картах ↗</a></div><figure class="day-photo"><img alt="Акведук Валента — римская аркада среди улиц Фатиха" decoding="async" height="300" src="https://commons.wikimedia.org/wiki/Special:FilePath/AqueductofValensIstanbul.jpg?width=1200" width="400"/><figcaption>Фото: Mondo79 / Wikimedia Commons, CC BY-SA</figcaption></figure><section class="points"><h2>Маршрут</h2><article class="stop stop-transit" id="point-d2-go">
+<details class="route-card">
 <summary>
-<span class="num" style="visibility:hidden">00</span>
+<span class="num" style="visibility:hidden">↗</span>
 <span class="stop-title"><strong>Как доехать</strong><span class="tr-name">[к старту дня 2]</span></span>
 <span aria-hidden="true" class="chev">⌄</span>
 </summary>
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">В пути: 10–25 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9780%2C41.0150&z=15&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9780%2C41.0150&amp;z=15&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <p>День 2 начинается в районе Акведука Валента / мечети Фатих. Из отеля (Аксарай): пешком 15–25 мин или трамвай <b>T1</b> / автобус до остановок у Фатиха / Unkapanı — сверьте в картах кратчайший путь на утро.</p>
 <p>Оплата проезда — Istanbulkart.</p>
@@ -1007,7 +1540,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.952881%2C41.007088&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Археологический парк" decoding="async" width="900" height="600" src="https://avatars.mds.yandex.net/get-altay/19756885/2a0000019ead2f5937064c479a444ddeda59/XXXL"/>
+<img alt="Археологический парк" decoding="async" height="600" src="https://avatars.mds.yandex.net/get-altay/19756885/2a0000019ead2f5937064c479a444ddeda59/XXXL" width="900"/>
 </div>
 <h3>Что это за место</h3><p>Начальная точка прогулки. Это небольшая археологическая остановка в городской ткани Фатиха: здесь стоит не торопиться, осмотреть открытые остатки и планировку участка, а затем продолжить путь к акведуку. Не рассчитывайте на формат большого музея с экспозицией и кассой — смысл этой точки именно в коротком знакомстве с археологическим слоем города.</p><h3>На что обратить внимание</h3><p>Посмотрите на то, как археологический участок встроен в современный район: старые фрагменты, уровень древней застройки и окружающие улицы. Сверяйте вход именно с точкой на Яндекс Картах: название «Археологический парк» используется для небольших городских археологических пространств.</p><h3>Практическая информация</h3><p>Если территория будет временно закрыта или огорожена, осмотрите её с доступной стороны и не пытайтесь проходить за ограждения.</p><p class="tipline"><b>Обрати внимание:</b> Остановка ориентировочная: перед поездкой стоит ещё раз проверить, что выбранная точка в Яндекс Картах ведёт именно к нужному археологическому участку.</p></div></details></article><article class="stop" id="point-2"><details><summary><span class="num">02</span><span class="stop-title"><strong>Акведук Валента</strong><span class="tr-name">[Bozdoğan Kemeri]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
 <div class="badge-row">
@@ -1015,7 +1548,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.953223%2C41.014447&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Акведук Валента" decoding="async" width="900" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/AqueductofValensIstanbul.jpg?width=900"/>
+<img alt="Акведук Валента" decoding="async" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/AqueductofValensIstanbul.jpg?width=900" width="900"/>
 </div>
 <h3>Что это за место</h3>
 <p>Один из самых впечатляющих фрагментов позднеримской инженерной системы Константинополя. Акведук возвели при императоре Валенте во второй половине IV века (примерно 368–373 годы); он доставлял воду в город из водосборных районов Фракии по трассе длиной в десятки километров. Сохранившаяся аркада стала частью повседневного городского пейзажа: под ней проходит современная оживлённая улица. Это один из самых узнаваемых «римских» силуэтов исторического полуострова.</p><h3>На что обратить внимание</h3><p>Посмотрите на двухъярусные арки, массивную каменную кладку и масштаб сооружения относительно машин и домов. Лучше отойти на несколько шагов, чтобы увидеть непрерывность линии арок, а не фотографировать только один пролёт.</p><h3>Практическая информация</h3><p>Сам акведук — открытый городской памятник. Переходите дороги только по переходам и не выходите на проезжую часть ради фотографии.</p><p class="tipline"><b>Обрати внимание:</b> Маршрут проходит рядом с оживлёнными дорогами. Для фотографий выбирайте тротуар и безопасные обзорные точки.</p></div></details></article><article class="stop" id="point-3"><details><summary><span class="num">03</span><span class="stop-title"><strong>Мечеть Фатих</strong><span class="tr-name">[Fatih Camii]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
@@ -1024,7 +1557,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.955678%2C41.015969&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Мечеть Фатих" decoding="async" width="900" height="600" src="https://pegasus.ru/wp-content/uploads/2025/03/mechet-fatikh-0-768x576-optimized.jpg"/>
+<img alt="Мечеть Фатих" decoding="async" height="600" src="https://pegasus.ru/wp-content/uploads/2025/03/mechet-fatikh-0-768x576-optimized.jpg" width="900"/>
 </div>
 <h3>Что это за место</h3>
 <p>Императорская мечеть Мехмеда II Завоевателя — один из главных османских ансамблей исторического полуострова. Первоначальный комплекс построили в 1463–1470 годах на месте византийской церкви Святых Апостолов (где были погребены многие императоры). После сильного землетрясения 1766 года здание сильно пострадало и было перестроено в 1767–1771 годах; поэтому нынешний облик сочетает раннеосманскую идею с более поздними архитектурными решениями. Рядом находится мавзолей самого Мехмеда II.</p><h3>На что обратить внимание</h3><p>Осмотрите большой двор, фонтан для омовений, купольную композицию и окружающие здания комплекса. Если молитвенный зал открыт для посетителей, обратите внимание на масштаб центрального пространства и каллиграфическое убранство. Рядом находится мавзолей Мехмеда II.</p><h3>Практическая информация</h3><p>Мечеть действующая. Туристическое посещение возможно вне молитв; плечи и колени должны быть закрыты, женщинам понадобится платок. Перед входом в молитвенный зал снимают обувь.</p><p class="tipline"><b>Обрати внимание:</b> Во время молитвы осмотр интерьера может быть временно недоступен. Уважайте молящихся и не фотографируйте людей крупным планом без разрешения.</p></div></details></article><article class="stop" id="point-4"><details><summary><span class="num">04</span><span class="stop-title"><strong>Смотровая площадка</strong><span class="tr-name">[Seyir Terası]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
@@ -1033,7 +1566,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.949886%2C41.019519&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Смотровая площадка" decoding="async" width="900" height="600" src="https://avatars.mds.yandex.net/get-altay/15157522/2a0000019575aff1e86e34a35b17bda717b1/XXXL"/>
+<img alt="Смотровая площадка" decoding="async" height="600" src="https://avatars.mds.yandex.net/get-altay/15157522/2a0000019575aff1e86e34a35b17bda717b1/XXXL" width="900"/>
 </div>
 <h3>Что это за место</h3><p>Короткая остановка ради панорамы и передышки после центральной части Фатиха. Здесь стоит посмотреть на город сверху: крыши старого района, минареты и, при хорошей видимости, направление Золотого Рога.</p><h3>На что обратить внимание</h3><p>Не ограничивайтесь одной фотографией: осмотритесь в обе стороны и отметьте, как меняется рельеф города. В феврале может быть ветрено, поэтому задерживаться на открытом краю площадки долго не обязательно.</p><h3>Практическая информация</h3><p>Если выбранная точка окажется площадкой при частном заведении, не считайте доступ гарантированным: ориентируйтесь на общественную часть и условия на месте.</p><p class="tipline"><b>Обрати внимание:</b> Точное название и доступность площадки лучше проверить на месте по сохранённой точке Яндекс Карт: у смотровых площадок могут меняться режим доступа и правила.</p></div></details></article><article class="stop" id="point-5"><details><summary><span class="num">05</span><span class="stop-title"><strong>Болгарская церковь Святого Стефана</strong><span class="tr-name">[Sveti Stefan Bulgar Kilisesi]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
 <div class="badge-row">
@@ -1041,7 +1574,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.951803%2C41.026936&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Болгарская церковь Святого Стефана" decoding="async" width="900" height="600" src="https://idsb.tmgrup.com.tr/ly/uploads/images/2022/02/25/185629.jpg"/>
+<img alt="Болгарская церковь Святого Стефана" decoding="async" height="600" src="https://idsb.tmgrup.com.tr/ly/uploads/images/2022/02/25/185629.jpg" width="900"/>
 </div>
 <h3>Что это за место</h3>
 <p>Знаменитая «железная церковь» Святого Стефана на берегу Золотого Рога. Металлические конструкции изготовили в Австрии (Вена), доставили в разобранном виде по Дунаю и Чёрному морю и собрали на месте. Современное здание освятили в 1898 году. Оно принадлежит болгарской православной общине и является одним из самых необычных храмов Стамбула — редкий пример сборной металлической архитектуры конца XIX века.</p><h3>На что обратить внимание</h3><p>Рассмотрите ажурные металлические конструкции, башни, фасад и необычную для православного храма технологию строительства. Если церковь открыта, загляните внутрь: интерьер и металлический каркас не менее интересны, чем внешний вид.</p><h3>Практическая информация</h3><p>Планируйте посещение как короткую остановку. Вход и часы доступа могут зависеть от богослужений и режима храма; перед поездкой проверьте актуальную информацию.</p><p class="tipline"><b>Обрати внимание:</b> Это действующий храм: соблюдайте тишину и правила посещения, не заходите во время закрытого богослужебного пространства.</p></div></details></article><article class="stop" id="point-6"><details><summary><span class="num">06</span><span class="stop-title"><strong>Греческий лицей Фенер</strong><span class="tr-name">[Özel Fener Rum Lisesi]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
@@ -1050,7 +1583,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.949742%2C41.031822&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Греческий лицей Фенер" decoding="async" width="900" height="600" src="https://static.agos.com.tr/upload/haber/school_pano_1004.jpg"/>
+<img alt="Греческий лицей Фенер" decoding="async" height="600" src="https://static.agos.com.tr/upload/haber/school_pano_1004.jpg" width="900"/>
 </div>
 <h3>Что это за место</h3>
 <p>Монументальное краснокирпичное здание над кварталом Фенер — один из самых узнаваемых силуэтов района. Нынешний корпус построили в 1881–1883 годах для греческой школы (Phanar Greek Orthodox College). Здание заметно издалека благодаря башнеобразной композиции и тёмно-красному кирпичу. Это действующее учебное заведение, поэтому осмотр только с улицы.</p><h3>На что обратить внимание</h3><p>Лучше всего здание воспринимается с улиц ниже по склону: оттуда видны масштаб корпуса, башня и контраст кирпича с небом. Можно сделать несколько кадров с разных ракурсов, не пытаясь попасть внутрь.</p><h3>Практическая информация</h3><p>Это действующее учебное заведение, а не музей. Для обычных туристов внутренние помещения, как правило, закрыты; осмотр планируйте с улицы.</p><p class="tipline"><b>Обрати внимание:</b> Не заходите на территорию школы без разрешения и не фотографируйте учеников крупным планом.</p></div></details></article><article class="stop" id="point-7"><details><summary><span class="num">07</span><span class="stop-title"><strong>Разноцветные дома на улице Киремит</strong><span class="tr-name">[Kiremit Caddesi]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
@@ -1059,7 +1592,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.949212%2C41.029448&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Разноцветные дома на улице Киремит" decoding="async" width="900" height="600" src="https://mesutoymak.com/wp-content/uploads/2025/09/kiremit-caddesi-renkli-evler-balat-1000x600.jpg"/>
+<img alt="Разноцветные дома на улице Киремит" decoding="async" height="600" src="https://mesutoymak.com/wp-content/uploads/2025/09/kiremit-caddesi-renkli-evler-balat-1000x600.jpg" width="900"/>
 </div>
 <h3>Что это за место</h3><p>Одна из самых фотогеничных улиц Балата: разноцветные фасады, старые дома и лестницы на склоне. Это жилой квартал, а не декорация, поэтому интереснее всего здесь не только яркие фасады, но и повседневная жизнь района.</p><h3>На что обратить внимание</h3><p>Посмотрите на ряд домов целиком, затем пройдитесь по улице и найдите более тихие ракурсы. Утренний или дневной свет обычно лучше подчёркивает цвета фасадов.</p><h3>Практическая информация</h3><p class="tipline"><b>Обрати внимание:</b> Не перекрывайте проходы, не заглядывайте в окна и не устраивайте фотосессии у дверей жилых домов, если мешаете жильцам.</p></div></details></article><article class="stop" id="point-8"><details><summary><span class="num">08</span><span class="stop-title"><strong>Разноцветные дома на улице Мердивенли Йокушу</strong><span class="tr-name">[Merdivenli Yokuşu]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
 <div class="badge-row">
@@ -1067,7 +1600,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.947588%2C41.029578&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Разноцветные дома на улице Мердивенли Йокушу" decoding="async" width="900" height="600" src="https://sjcdn.sutochno.ru/image_03051a89f2.webp"/>
+<img alt="Разноцветные дома на улице Мердивенли Йокушу" decoding="async" height="600" src="https://sjcdn.sutochno.ru/image_03051a89f2.webp" width="900"/>
 </div>
 <h3>Что это за место</h3><p>Короткая, но выразительная лестничная улица Балата. Её узнаваемый вид создают ступени, цветные фасады и плотная историческая застройка. Это одна из тех точек, ради которых стоит пройтись по Балату пешком, а не только проехать между достопримечательностями.</p><h3>На что обратить внимание</h3><p>Посмотрите на перспективу лестницы снизу и сверху. Не спешите сразу уходить: с верхней части хорошо читается рельеф квартала и характерная плотность старой застройки.</p><h3>Практическая информация</h3><p></p><p class="tipline"><b>Обрати внимание:</b> Ступени могут быть скользкими после дождя. Обувь с нормальной подошвой здесь удобнее гладкой городской обуви.</p></div></details></article><article class="stop" id="point-9"><details><summary><span class="num">09</span><span class="stop-title"><strong>Мечеть Карие — бывший монастырь Хора</strong><span class="tr-name">[Kariye Camii (Chora)]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
 <div class="badge-row">
@@ -1075,16 +1608,16 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.946404%2C41.031554&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <p class="paid-warning">Платный вход: 20 € ≈ 1 121 ₺ / 2 015 ₽ на человека; на двоих — около 2 241 ₺ / 4 030 ₽.</p></div><div class="photo-grid photo-single">
-<img alt="Мечеть Карие — бывший монастырь Хора" decoding="async" width="900" height="600" src="https://avatars.mds.yandex.net/get-altay/18150755/2a0000019ba9245f9f274e446cf87bfe01a3/L_height"/>
+<img alt="Мечеть Карие — бывший монастырь Хора" decoding="async" height="600" src="https://avatars.mds.yandex.net/get-altay/18150755/2a0000019ba9245f9f274e446cf87bfe01a3/L_height" width="900"/>
 </div>
 <h3>Что это за место</h3>
-<p>Один из важнейших памятников византийского искусства в Стамбуле. Бывший монастырь Хора (Chora) получил свой нынешний облик в начале XIV века, когда византийский сановник Феодор Метохит заказал масштабную программу мозаик и фресок (примерно 1315–1321 годы). Особенно знамениты сцены из жизни Христа и Богородицы в притворах, а также мощный фресковый цикл в парекклисионе (боковой усыпальнице). После османского завоевания храм превратили в мечеть; в XX веке он был музеем, а с 2020 года снова действует как мечеть. Центральная молитвенная часть закрыта занавесами, но мозаики и фрески в доступных помещениях по-прежнему производят сильнейшее впечатление.</p><h3>На что обратить внимание</h3><p>Главное — не спешить. Рассмотрите мозаики притворов, композиции на золотом фоне и фрески боковой часовни. Центральная молитвенная часть действует как мечеть, поэтому часть изображений там закрыта; посетительский маршрут сосредоточен на доступных исторических помещениях.</p><h3>Практическая информация</h3><p>Для иностранных туристов действует билет €20 — ориентировочно 1 121 ₺ / 2 015 ₽ на человека по справочному курсу с добавлением 10%. На двоих: около 2 241 ₺ / 4 030 ₽. По опубликованным правилам туристическое посещение обычно 09:00–18:00, по пятницам закрыто; вход приостанавливают перед молитвами. Перед поездкой обязательно перепроверьте тариф и часы.</p><p class="tipline"><b>Платный вход:</b> 20 € ≈ 1,121 ₺ / 2,015 ₽ на человека. Для двоих — около 2,241 ₺ / 4,030 ₽. Цена ориентировочная, проверьте перед поездкой.</p><p class="tipline"><b>Обрати внимание:</b> Важно: по пятницам туристический вход закрыт. Не ставьте Карие в конец дня: лучше оставить запас минимум на час и учитывать молитвенные перерывы.</p></div></details></article><article class="stop" id="point-10"><details><summary><span class="num">10</span><span class="stop-title"><strong>Мечеть Михримах-султан</strong><span class="tr-name">[Mihrimah Sultan Camii (Edirnekapı)]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
+<p>Один из важнейших памятников византийского искусства в Стамбуле. Бывший монастырь Хора (Chora) получил свой нынешний облик в начале XIV века, когда византийский сановник Феодор Метохит заказал масштабную программу мозаик и фресок (примерно 1315–1321 годы). Особенно знамениты сцены из жизни Христа и Богородицы в притворах, а также мощный фресковый цикл в парекклисионе (боковой усыпальнице). После османского завоевания храм превратили в мечеть; в XX веке он был музеем, а с 2020 года снова действует как мечеть. Центральная молитвенная часть закрыта занавесами, но мозаики и фрески в доступных помещениях по-прежнему производят сильнейшее впечатление.</p><h3>На что обратить внимание</h3><p>Главное — не спешить. Рассмотрите мозаики притворов, композиции на золотом фоне и фрески боковой часовни. Центральная молитвенная часть действует как мечеть, поэтому часть изображений там закрыта; посетительский маршрут сосредоточен на доступных исторических помещениях.</p><h3>Практическая информация</h3><p>Для иностранных туристов действует билет €20 — ориентировочно 1 121 ₺ / 2 015 ₽ на человека по справочному курсу с добавлением 10%. На двоих: около 2 241 ₺ / 4 030 ₽. По опубликованным правилам туристическое посещение обычно 09:00–18:00, по пятницам закрыто; вход приостанавливают перед молитвами. Перед поездкой обязательно перепроверьте тариф и часы.</p><p class="tipline"><b>Платный вход:</b> 20 € ≈ 1,121 ₺ / 2,015 ₽ на человека. Для двоих — около 2,241 ₺ / 4,030 ₽. Цена ориентировочная, проверьте перед поездкой.</p><p class="tipline"><b>Обрати внимание:</b> Важно: по пятницам туристический вход закрыт. Не ставьте Карие в конец дня: лучше оставить запас минимум на час и учитывать молитвенные перерывы.</p></details></article><article class="stop" id="point-10"><details><summary><span class="num">10</span><span class="stop-title"><strong>Мечеть Михримах-султан</strong><span class="tr-name">[Mihrimah Sultan Camii (Edirnekapı)]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 20–30 минут</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.939126%2C41.031220&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Мечеть Михримах-султан" decoding="async" width="900" height="600" src="https://avatars.mds.yandex.net/get-altay/1583613/2a0000016c23d8b7b24e595168d078434aa5/L_height"/>
+<img alt="Мечеть Михримах-султан" decoding="async" height="600" src="https://avatars.mds.yandex.net/get-altay/1583613/2a0000016c23d8b7b24e595168d078434aa5/L_height" width="900"/>
 </div>
 <h3>Что это за место</h3>
 <p>Мечеть XVI века, построенная архитектором Мимаром Синаном для Михримах-султан — дочери Сулеймана Великолепного и Хюррем-султан. Строительство завершили около 1562–1565 годов. Здание стоит у ворот Эдирнекапы и заметно отличается от многих османских мечетей обилием окон: интерьер получается необычно светлым и «воздушным». Это одна из самых изящных работ Синана в Стамбуле.</p><h3>На что обратить внимание</h3><p>Осмотрите фасад и купол, затем, если зал открыт, зайдите внутрь. Обратите внимание на то, как дневной свет проходит через многочисленные окна и делает интерьер визуально лёгким.</p><h3>Практическая информация</h3><p>Действующая мечеть: посещение вне молитв, одежда закрывает плечи и колени; женщинам нужен платок. Перед входом снимают обувь.</p><p class="tipline"><b>Обрати внимание:</b> Не планируйте интерьер впритык к молитвенному времени. Если мечеть закрыта для посетителей, осмотрите архитектуру и площадь.</p></div></details></article><article class="stop" id="point-11"><details><summary><span class="num">11</span><span class="stop-title"><strong>Стены Константинополя</strong><span class="tr-name">[Theodosian Walls (Kara Surları)]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
@@ -1093,7 +1626,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.935768%2C41.029228&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Стены Константинополя" decoding="async" width="900" height="600" src="https://avatars.mds.yandex.net/get-altay/16617364/2a0000019703679b652ac4af7ad4dce8b604/orig"/>
+<img alt="Стены Константинополя" decoding="async" height="600" src="https://avatars.mds.yandex.net/get-altay/16617364/2a0000019703679b652ac4af7ad4dce8b604/orig" width="900"/>
 </div>
 <h3>Что это за место</h3>
 <p>Феодосиевы (сухопутные) стены — оборонительная система, сформировавшаяся в V веке при императоре Феодосии II (примерно 408–450 годы) и веками защищавшая Константинополь. Мощные двойные стены, башни, рвы и ворота показывают масштаб древней столицы. Именно эти укрепления делали город практически неприступным до появления тяжёлой артиллерии; их прорыв в 1453 году стал поворотным моментом истории.</p><h3>На что обратить внимание</h3><p>Рассмотрите толщину стен, башни, кладку из камня и кирпича, а также рельеф бывшей оборонительной линии. Не обязательно проходить большой участок: достаточно внимательно осмотреть доступный фрагмент и представить прежнюю систему рвов и нескольких линий укреплений.</p><h3>Практическая информация</h3><p>Не поднимайтесь на аварийные или закрытые участки.</p><p class="tipline"><b>Обрати внимание:</b> Камни и ступени могут быть неровными. Не заходите за ограждения и не взбирайтесь на стены: часть кладки повреждена и может быть опасной.</p></div></details></article><article class="stop" id="point-12"><details><summary><span class="num">12</span><span class="stop-title"><strong>Парк Айвансарай</strong><span class="tr-name">[Ayvansaray Parkı]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
@@ -1102,7 +1635,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.935277%2C41.030144&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Парк Айвансарай" decoding="async" width="900" height="600" src="https://avatars.mds.yandex.net/get-altay/20412588/2a0000019eb2040c7a4e068ff2ad43cde578/XXXL"/>
+<img alt="Парк Айвансарай" decoding="async" height="600" src="https://avatars.mds.yandex.net/get-altay/20412588/2a0000019eb2040c7a4e068ff2ad43cde578/XXXL" width="900"/>
 </div>
 <h3>Что это за место</h3><p>Небольшая зелёная передышка у Золотого Рога после осмотра стен. Здесь можно немного отдохнуть, посмотреть на воду и сменить темп перед заключительной частью дня — Эйюпом и подъёмом на холм Пьер Лоти.</p><h3>На что обратить внимание</h3><p>Пройдитесь по дорожкам, найдите вид на бухту и противоположный берег. Это не большой парк-аттракцион, а спокойная промежуточная остановка у воды.</p><h3>Практическая информация</h3><p class="tipline"><b>Обрати внимание:</b> В феврале у воды может быть холоднее и ветренее, чем в глубине кварталов. Оставьте время на короткий отдых, но не задерживайтесь слишком долго, если хотите успеть на паром.</p></div></details></article><article class="stop" id="point-13"><details><summary><span class="num">13</span><span class="stop-title"><strong>Мечеть Эюп-султан и историческая площадь</strong><span class="tr-name">[Eyüp Sultan Camii]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
 <div class="badge-row">
@@ -1110,7 +1643,7 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.943516%2C41.040429&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Мечеть Эюп-султан и историческая площадь" decoding="async" width="900" height="600" src="https://museumpass.istanbul/wp-content/uploads/2025/07/image-20250707-195517-edited.png.webp"/>
+<img alt="Мечеть Эюп-султан и историческая площадь" decoding="async" height="600" src="https://museumpass.istanbul/wp-content/uploads/2025/07/image-20250707-195517-edited.png.webp" width="900"/>
 </div>
 <h3>Что это за место</h3>
 <p>Один из важнейших религиозных комплексов Стамбула. Мечеть связана с почитанием Абу Айюба аль-Ансари, сподвижника пророка Мухаммеда; его мавзолей находится рядом. Первую мечеть на этом месте построили вскоре после 1453 года, нынешнее здание — результат более поздних перестроек (XVIII–XIX вв.). Район вокруг — отдельный исторический мир с паломниками, лавками, старинными надгробиями и спокойными улочками. По пятницам и в праздники здесь особенно многолюдно.</p><h3>На что обратить внимание</h3><p>Осмотрите двор, фонтан, ворота и площадь. Если открыт доступ, посетите мечеть и мавзолей, соблюдая правила действующего религиозного комплекса. Обратите внимание на атмосферу района: это не только туристическая точка, но и место паломничества.</p><h3>Практическая информация</h3><p>Нужна скромная одежда; женщинам — платок, обувь снимают перед молитвенным залом.</p><p class="tipline"><b>Обрати внимание:</b> По пятницам и религиозным праздникам здесь особенно многолюдно. Закладывайте дополнительное время на очередь и осмотр.</p></div></details></article><article class="stop" id="point-14"><details><summary><span class="num">14</span><span class="stop-title"><strong>Холм Пьер Лоти и канатная дорога</strong><span class="tr-name">[Piyer Loti Tepesi · TF2 Eyüp–Piyer Loti]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
@@ -1119,17 +1652,27 @@ details[open] .photo-grid {
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.934373%2C41.049866&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Холм Пьер Лоти и канатная дорога" decoding="async" width="900" height="600" src="https://moystambul.ru/wp-content/uploads/2020/04/maxresdefault1.jpg"/>
+<img alt="Холм Пьер Лоти и канатная дорога" decoding="async" height="600" src="https://moystambul.ru/wp-content/uploads/2020/04/maxresdefault1.jpg" width="900"/>
 </div>
-<p class="paid-warning">Платная канатная дорога TF2: 46,20 ₺ / около 83 ₽ за поездку на человека.</p></div><h3>Что это за место</h3><p>Финальная панорама дня — вид на Золотой Рог с высоты. На вершину поднимает канатная дорога TF2: короткая поездка над склоном и старым кладбищем приводит к смотровым площадкам и кафе на холме Пьер Лоти.</p><h3>На что обратить внимание</h3><p>На вершине не ограничивайтесь одной смотровой точкой: посмотрите на изгиб Золотого Рога, мосты и исторический силуэт Фатиха. Если хочется, можно взять чай или кофе в кафе, но это необязательная часть программы.</p><h3>Практическая информация</h3><p>Канатная дорога оплачивается İstanbulkart по обычному тарифу: 46,20 ₺ / около 83 ₽ за одну поездку на человека. Если подниматься и спускаться на канатке — 92,40 ₺ / около 166 ₽ на человека; на двоих за подъём и спуск — 184,80 ₺ / около 332 ₽. Тариф указан по состоянию на 04.11.2026 и может измениться к февралю 2027.</p><p class="tipline"><b>Обрати внимание:</b> Важно: при сильном ветре или плохой погоде канатная дорога может временно остановиться. Для обратного пути к пристани лучше спуститься на TF2, а не рассчитывать на пеший спуск по крутому кладбищенскому склону в темноте.</p></div></details></article><article class="stop" id="point-15"><details><summary><span class="num">15</span><span class="stop-title"><strong>Пристань Эйюпсултан — паром до Каракёя</strong><span class="tr-name">[Eyüpsultan İskelesi]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
+<p class="paid-warning">Платная канатная дорога TF2: 46,20 ₺ / около 83 ₽ за поездку на человека.</p></div><h3>Что это за место</h3><p>Финальная панорама дня — вид на Золотой Рог с высоты. На вершину поднимает канатная дорога TF2: короткая поездка над склоном и старым кладбищем приводит к смотровым площадкам и кафе на холме Пьер Лоти.</p><h3>На что обратить внимание</h3><p>На вершине не ограничивайтесь одной смотровой точкой: посмотрите на изгиб Золотого Рога, мосты и исторический силуэт Фатиха. Если хочется, можно взять чай или кофе в кафе, но это необязательная часть программы.</p><h3>Практическая информация</h3><p>Канатная дорога оплачивается İstanbulkart по обычному тарифу: 46,20 ₺ / около 83 ₽ за одну поездку на человека. Если подниматься и спускаться на канатке — 92,40 ₺ / около 166 ₽ на человека; на двоих за подъём и спуск — 184,80 ₺ / около 332 ₽. Тариф указан по состоянию на 04.11.2026 и может измениться к февралю 2027.</p><p class="tipline"><b>Обрати внимание:</b> Важно: при сильном ветре или плохой погоде канатная дорога может временно остановиться. Для обратного пути к пристани лучше спуститься на TF2, а не рассчитывать на пеший спуск по крутому кладбищенскому склону в темноте.</p></details></article><article class="stop" id="point-15"><details><summary><span class="num">15</span><span class="stop-title"><strong>Пристань Эйюпсултан — паром до Каракёя</strong><span class="tr-name">[Eyüpsultan İskelesi]</span></span><span aria-hidden="true" class="chev">⌄</span></summary><div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 10–15 минут на посадку</span>
 <a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.937806%2C41.047263&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Пристань Эйюпсултан — паром до Каракёя" decoding="async" width="900" height="600" src="https://cdn.istanbultouristpass.com/banner/doc/a762e516b1c2de11b0e3b6a0b051ebe8-643018a4d2434.jpg"/>
+<img alt="Пристань Эйюпсултан — паром до Каракёя" decoding="async" height="600" src="https://cdn.istanbultouristpass.com/banner/doc/a762e516b1c2de11b0e3b6a0b051ebe8-643018a4d2434.jpg" width="900"/>
 </div>
-<p class="paid-warning">Платный паром: до 76,90 ₺ / около 138 ₽ на человека (полный тариф линии; короткий участок может стоить меньше).</p></div><h3>Что это за место</h3><p>От нижней станции канатной дороги до пристани — короткий переход пешком. Здесь садитесь на городской паром линии Üsküdar–Haliç в направлении Üsküdar и выходите в Каракёе. Это красивое завершение дня: по пути паром проходит вдоль набережных Золотого Рога.</p><h3>На что обратить внимание</h3><p>На табло ищите направление Üsküdar и проверьте, что рейс действительно следует через Karaköy. После посадки оставайтесь на борту до Karaköy; промежуточные остановки — Sütlüce, Ayvansaray, Hasköy, Balat, Fener и Kasımpaşa.</p><h3>Практическая информация</h3><p>Полный тариф линии Üsküdar–Haliç — до 76,90 ₺ / около 138 ₽ на человека; на двоих — до 153,80 ₺ / около 277 ₽. Для короткого участка Eyüpsultan–Karaköy фактическая сумма может зависеть от правил тарификации/возврата на линии. Заложите максимальный тариф, чтобы не недооценить расходы. İstanbulkart нужна каждому пассажиру для отдельного прохода.</p><p class="tipline"><b>Платный транспорт:</b> паром — до 76,90 ₺ / около 138 ₽ на человека; итоговую сумму и условия оплаты уточните на пристани.</p><p class="tipline"><b>Обрати внимание:</b> Не рассчитывайте на паром без проверки последнего рейса. В опубликованном расписании есть отправления из Эйюпа в 18:40 и 19:45 в обычные дни; рейс 20:45 указан для воскресений и официальных праздников. Расписание на февраль 2027 нужно перепроверить ближе к поездке.</p></div></details></article></section><section class="card"><h2>Возвращение в отель по воде</h2>
+<p class="paid-warning">Платный паром: до 76,90 ₺ / около 138 ₽ на человека (полный тариф линии; короткий участок может стоить меньше).</p></div><h3>Что это за место</h3><p>От нижней станции канатной дороги до пристани — короткий переход пешком. Здесь садитесь на городской паром линии Üsküdar–Haliç в направлении Üsküdar и выходите в Каракёе. Это красивое завершение дня: по пути паром проходит вдоль набережных Золотого Рога.</p><h3>На что обратить внимание</h3><p>На табло ищите направление Üsküdar и проверьте, что рейс действительно следует через Karaköy. После посадки оставайтесь на борту до Karaköy; промежуточные остановки — Sütlüce, Ayvansaray, Hasköy, Balat, Fener и Kasımpaşa.</p><h3>Практическая информация</h3><p>Полный тариф линии Üsküdar–Haliç — до 76,90 ₺ / около 138 ₽ на человека; на двоих — до 153,80 ₺ / около 277 ₽. Для короткого участка Eyüpsultan–Karaköy фактическая сумма может зависеть от правил тарификации/возврата на линии. Заложите максимальный тариф, чтобы не недооценить расходы. İstanbulkart нужна каждому пассажиру для отдельного прохода.</p><p class="tipline"><b>Платный транспорт:</b> паром — до 76,90 ₺ / около 138 ₽ на человека; итоговую сумму и условия оплаты уточните на пристани.</p><p class="tipline"><b>Обрати внимание:</b> Не рассчитывайте на паром без проверки последнего рейса. В опубликованном расписании есть отправления из Эйюпа в 18:40 и 19:45 в обычные дни; рейс 20:45 указан для воскресений и официальных праздников. Расписание на февраль 2027 нужно перепроверить ближе к поездке.</p></details></article><article class="stop stop-transit return-stop" id="point-d2-back">
+<details class="route-card">
+<summary>
+<span class="num" style="visibility:hidden">↩</span>
+<span class="stop-title"><strong>Как вернуться в отель</strong><span class="tr-name">[Эюп → Аксарай]</span></span>
+<span aria-hidden="true" class="chev">⌄</span>
+</summary>
+<div class="stop-content"><div class="badge-row">
+<span class="badge badge-time">В пути: 60–75 мин</span>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9766%2C41.0218&amp;z=15&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+</div>
 <p><b>Отель:</b> отель в районе Аксарая</p>
 <ol>
 <li><b>Спуск с холма Пьер Лоти.</b> От верхней станции спуститесь на канатной дороге TF2 до нижней станции Eyüp. Обратный спуск оплачивается отдельно (ещё одна поездка по İstanbulkart).</li>
@@ -1147,42 +1690,28 @@ details[open] .photo-grid {
 </ul>
 </li>
 </ol>
-<p class="tipline"><b>Ориентиры у отеля:</b> рядом Yenikapı (Marmaray + M1), несколько небольших отелей и жилая застройка. От двери отеля до остановки Aksaray обычно 5–8 минут.</p><h3>Расходы на обратную дорогу</h3><ul><li>Канатная дорога TF2: 46,20 ₺ / около 83 ₽ за одну поездку на человека. Подъём и спуск на двоих: 184,80 ₺ / около 332 ₽.</li><li>Паром Eyüpsultan–Karaköy: заложите до 76,90 ₺ / около 138 ₽ на человека; на двоих — до 153,80 ₺ / около 277 ₽.</li><li>Трамвай T1: 46,20 ₺ / около 83 ₽ на человека; на двоих — 92,40 ₺ / около 166 ₽.</li></ul><p><b>Итого транспорт на двоих:</b> ориентировочно 431 ₺ / 775 ₽, если вы поднимаетесь и спускаетесь на канатной дороге и используете полный тариф парома. Это оценка по тарифам на 04.11.2026; к февралю 2027 цены могут измениться.</p><p class="tipline"><b>Важно по времени:</b> опубликованное расписание Şehir Hatları показывает вечерние отправления из Eyüpsultan в 18:40 и 19:45 в обычные дни; рейс 20:45 указан по воскресеньям и официальным праздникам. Прибытие в Karaköy — примерно через 50 минут. Не планируйте посадку на последний рейс без проверки актуального расписания в день поездки.</p><p><a href="https://sehirhatlari.istanbul/tr/seferler/ic-hatlar/istanbul-ici-hatlar/uskudar-halic-hatti-37" rel="noopener" target="_blank">Официальное расписание линии Üsküdar–Haliç ↗</a> · <a href="https://www.metro.istanbul/seferdurumlari/biletucretleri" rel="noopener" target="_blank">Тарифы Metro İstanbul ↗</a></p></section><section class="card"><h2>Пешая нагрузка и время</h2><p class="smallnote">Оценка по последовательности точек из утверждённой карты; реальная дистанция зависит от выбранных проходов, входов и небольших отклонений внутри кварталов.</p><div class="metrics"><div><b>10–11 км</b><span>пешком за день</span></div><div><b>13–15 тыс.</b><span>шагов</span></div><div><b>+170–230 м</b><span>суммарный набор высоты</span></div><div><b>−180–240 м</b><span>суммарный спуск</span></div></div><p><b>Чистое время ходьбы:</b> ориентировочно 2 ч 45 мин – 3 ч 20 мин. Это только движение пешком, без осмотра достопримечательностей, ожидания, еды, отдыха, поездок на канатной дороге, пароме и трамвае.</p><p><b>Общее время дня:</b> ориентировочно 8–10 часов с учётом посещения Карие, остановок в Фенере и Балате, Эюпа и холма Пьер Лоти. Продолжительность будет зависеть от расписания молитв и парома.</p><p class="smallnote">Если на холм Пьер Лоти подниматься и спускаться на TF2, крутой пеший подъём и спуск не включены в пешую нагрузку.</p><article class="stop stop-transit" id="point-d2-back">
-<details>
-<summary>
-<span class="num" style="visibility:hidden">00</span>
-<span class="stop-title"><strong>Как вернуться</strong><span class="tr-name">[к отелю, Аксарай]</span></span>
-<span aria-hidden="true" class="chev">⌄</span>
-</summary>
-<div class="stop-content">
-<div class="badge-row">
-<span class="badge badge-time">В пути: 25–45 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9766%2C41.0218&z=15&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
-</div>
-<p>После пристани Эюп: паром до Каракёя (по расписанию), затем трамвай <b>T1</b> от <b>Karaköy</b> до <b>Aksaray</b> / <b>Yusufpaşa</b> без дополнительных пересадок на линии T1.</p>
-<p>Либо автобус/таксi от Эюпа в сторону Аксарая — смотрите карты. От остановки Aksaray / Yusufpaşa до отеля — несколько минут пешком.</p>
-</div>
+<p class="tipline"><b>Ориентиры у отеля:</b> рядом Yenikapı (Marmaray + M1), несколько небольших отелей и жилая застройка. От двери отеля до остановки Aksaray обычно 5–8 минут.</p><h3>Расходы на обратную дорогу</h3><ul><li>Канатная дорога TF2: 46,20 ₺ / около 83 ₽ за одну поездку на человека. Подъём и спуск на двоих: 184,80 ₺ / около 332 ₽.</li><li>Паром Eyüpsultan–Karaköy: заложите до 76,90 ₺ / около 138 ₽ на человека; на двоих — до 153,80 ₺ / около 277 ₽.</li><li>Трамвай T1: 46,20 ₺ / около 83 ₽ на человека; на двоих — 92,40 ₺ / около 166 ₽.</li></ul><p><b>Итого транспорт на двоих:</b> ориентировочно 431 ₺ / 775 ₽, если вы поднимаетесь и спускаетесь на канатной дороге и используете полный тариф парома. Это оценка по тарифам на 04.11.2026; к февралю 2027 цены могут измениться.</p><p class="tipline"><b>Важно по времени:</b> опубликованное расписание Şehir Hatları показывает вечерние отправления из Eyüpsultan в 18:40 и 19:45 в обычные дни; рейс 20:45 указан по воскресеньям и официальным праздникам. Прибытие в Karaköy — примерно через 50 минут. Не планируйте посадку на последний рейс без проверки актуального расписания в день поездки.</p><p><a href="https://sehirhatlari.istanbul/tr/seferler/ic-hatlar/istanbul-ici-hatlar/uskudar-halic-hatti-37" rel="noopener" target="_blank">Официальное расписание линии Üsküdar–Haliç ↗</a> · <a href="https://www.metro.istanbul/seferdurumlari/biletucretleri" rel="noopener" target="_blank">Тарифы Metro İstanbul ↗</a></p></div>
 </details>
-</article>
+</article></section><section class="card"><h2>Пешая нагрузка и время</h2><p class="smallnote">Оценка по последовательности точек из утверждённой карты; реальная дистанция зависит от выбранных проходов, входов и небольших отклонений внутри кварталов.</p><div class="metrics"><div><b>10–11 км</b><span>пешком за день</span></div><div><b>13–15 тыс.</b><span>шагов</span></div><div><b>+170–230 м</b><span>суммарный набор высоты</span></div><div><b>−180–240 м</b><span>суммарный спуск</span></div></div><p><b>Чистое время ходьбы:</b> ориентировочно 2 ч 45 мин – 3 ч 20 мин. Это только движение пешком, без осмотра достопримечательностей, ожидания, еды, отдыха, поездок на канатной дороге, пароме и трамвае.</p><p><b>Общее время дня:</b> ориентировочно 8–10 часов с учётом посещения Карие, остановок в Фенере и Балате, Эюпа и холма Пьер Лоти. Продолжительность будет зависеть от расписания молитв и парома.</p><p class="smallnote">Если на холм Пьер Лоти подниматься и спускаться на TF2, крутой пеший подъём и спуск не включены в пешую нагрузку.</p>
 </section></section>
 <section class="day" id="day-3"><div class="dayheading"><span>СТАМБУЛ · ДЕНЬ 03</span><h1>Таксим — Истикляль — Галата — Галатапорт — Долмабахче — Ортакёй</h1></div>
 <div class="dayintro">
 <p><b>От Таксима к Босфору.</b> Старт — площадь Таксим и Истикляль, спуск через Галату к Каракёю и Галатапорту, далее вдоль воды до Ортакёя.</p>
 <a class="primary-link" href="https://yandex.ru/maps/-/CXv9I2KG" rel="noopener" target="_blank">Открыть маршрут в Яндекс Картах</a>
 </div>
-<figure class="day-photo"><img alt="Истикляль и Таксим" decoding="async" width="900" height="600" src="https://upload.wikimedia.org/wikipedia/commons/1/15/Istanbul%2C_%C4%B0stikl%C3%A2l_Caddesi%2C_2023.jpg"/><figcaption>Проспект Истикляль</figcaption></figure>
+<figure class="day-photo"><img alt="Истикляль и Таксим" decoding="async" height="600" src="https://upload.wikimedia.org/wikipedia/commons/1/15/Istanbul%2C_%C4%B0stikl%C3%A2l_Caddesi%2C_2023.jpg" width="900"/><figcaption>Проспект Истикляль</figcaption></figure>
 <section class="points"><h2>Маршрут</h2>
 <article class="stop stop-transit" id="point-d3-go">
-<details>
+<details class="route-card">
 <summary>
-<span class="num" style="visibility:hidden">00</span>
+<span class="num" style="visibility:hidden">↗</span>
 <span class="stop-title"><strong>Как доехать</strong><span class="tr-name">[до Таксима / Истикляль]</span></span>
 <span aria-hidden="true" class="chev">⌄</span>
 </summary>
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">В пути: 20–40 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.985607%2C41.037437&z=16&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.985607%2C41.037437&amp;z=16&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <h3>Без пересадок из района Аксарая</h3>
 <p><b>Автобус IETT</b> с остановок у Аксарая / Лалели в сторону <b>Taksim</b> (линии вроде 32T, 38 и др. — сверьте табло и карты в день поездки). Высадка: Taksim.</p>
@@ -1204,10 +1733,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 15–25 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.978%2C41.0341&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.978%2C41.0341&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Цветочный пассаж (Чичек Пасажı)" decoding="async" width="900" height="600" src="https://cdn.getyourguide.com/image/format=auto%2Cfit=crop%2Cgravity=auto%2Cquality=60%2Cwidth=800%2Cheight=530%2Cdpr=2/tour_img/23fab6a3ac223b3a4f96e96f51524bb7d14f4d91b29a9cef4b1998007104e3fd.jpg"/>
+<img alt="Цветочный пассаж (Чичек Пасажı)" decoding="async" height="600" src="https://cdn.getyourguide.com/image/format=auto%2Cfit=crop%2Cgravity=auto%2Cquality=60%2Cwidth=800%2Cheight=530%2Cdpr=2/tour_img/23fab6a3ac223b3a4f96e96f51524bb7d14f4d91b29a9cef4b1998007104e3fd.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>Пассаж открыт в 1876 году как Cité de Péra — крытый торговый проход в духе европейских галерей. Название «Чичек» закрепилось в XX веке, когда здесь торговали цветами. Сегодня внутри мейхане и туристические кафе. Рядом — Галатасарайский лицей (1868).</p>
@@ -1230,10 +1759,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 15–25 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9772%2C41.0323&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9772%2C41.0323&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Церковь Святого Антония Падуанского" decoding="async" width="900" height="600" src="https://img.pac.ru/landmarks/495541/big/F37DB5227F0001017B6BFF2DD477D5C1.jpg"/>
+<img alt="Церковь Святого Антония Падуанского" decoding="async" height="600" src="https://img.pac.ru/landmarks/495541/big/F37DB5227F0001017B6BFF2DD477D5C1.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>Самый большой католический храм Стамбула. Здание в неоготическом стиле построено в 1906–1912 годах по проекту Джулио Монгери для итальянской общины. На этом месте католическая церковь существовала с XVIII века.</p>
@@ -1256,10 +1785,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 20–40 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9765%2C41.031&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9765%2C41.031&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Проспект Истикляль" decoding="async" width="900" height="600" src="https://upload.wikimedia.org/wikipedia/commons/1/15/Istanbul%2C_%C4%B0stikl%C3%A2l_Caddesi%2C_2023.jpg"/>
+<img alt="Проспект Истикляль" decoding="async" height="600" src="https://upload.wikimedia.org/wikipedia/commons/1/15/Istanbul%2C_%C4%B0stikl%C3%A2l_Caddesi%2C_2023.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>Главная пешеходная артерия Бейоглу. В XIX — начале XX века — Grande Rue de Péra. После провозглашения Республики — Истикляль («Независимость»). Красный ретро-трамвай Nostaljik Tramvay (T2) ходит вдоль улицы.</p>
@@ -1282,10 +1811,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 15–25 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9768%2C41.0278&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9768%2C41.0278&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Крымская церковь" decoding="async" width="900" height="600" src="https://moystambul.ru/wp-content/uploads/2021/01/Kirim-kilisesi.jpg"/>
+<img alt="Крымская церковь" decoding="async" height="600" src="https://moystambul.ru/wp-content/uploads/2021/01/Kirim-kilisesi.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>Англиканская церковь в неоготическом стиле, построенная в 1858–1868 годах как мемориал британским солдатам, погибшим в Крымской войне (1853–1856). Официальное название — Christ Church. Архитектор — G. E. Street.</p>
@@ -1308,10 +1837,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 5–10 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9738%2C41.0277&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9738%2C41.0277&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Улица Ильк Беледие" decoding="async" width="900" height="600" src="https://i0.wp.com/marshruting.com/wp-content/uploads/2025/03/20230423_173419.jpg?resize=1800%2C1200&ssl=1"/>
+<img alt="Улица Ильк Беледие" decoding="async" height="600" src="https://i0.wp.com/marshruting.com/wp-content/uploads/2025/03/20230423_173419.jpg?resize=1800%2C1200&amp;ssl=1" width="900"/>
 </div>
 <h3>История</h3>
 <p>Улица маршрута в Галате — промежуточная точка, чтобы выйти к Бююк Хендек и Галатской башне. Типичная застройка «старого Пера»: узкие фасады, кафе, лавки.</p>
@@ -1334,10 +1863,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 5–10 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9732%2C41.0265&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9732%2C41.0265&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Улица Бююк Хендек" decoding="async" width="900" height="600" src="https://www.momondo.de/rimg/dimg/dynamic/264/2022/12/69050aa58f87da972037d3f40dc54423.webp"/>
+<img alt="Улица Бююк Хендек" decoding="async" height="600" src="https://www.momondo.de/rimg/dimg/dynamic/264/2022/12/69050aa58f87da972037d3f40dc54423.webp" width="900"/>
 </div>
 <h3>История</h3>
 <p>Улица у подножия Галатской башни («Большой ров» — отсылка к средневековым укреплениям). По ней удобно подойти к башне и дальше спуститься к лестнице Камондо.</p>
@@ -1360,10 +1889,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 30–50 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9742%2C41.0256&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9742%2C41.0256&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Галатская башня" decoding="async" width="900" height="600" src="https://cdn-imgix.headout.com/media/images/09e636ca5fa7ac9d948fe88dc0e2a59e-AdobeStock-284923951.jpeg"/>
+<img alt="Галатская башня" decoding="async" height="600" src="https://cdn-imgix.headout.com/media/images/09e636ca5fa7ac9d948fe88dc0e2a59e-AdobeStock-284923951.jpeg" width="900"/>
 </div>
 <div class="paid-warn"><strong>Вход:</strong> вход ≈ 650–900 ₺ / ≈ 1140–1575 ₽ с человека (уточняйте на месте)</div>
 <h3>История</h3>
@@ -1387,10 +1916,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 10–15 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9738%2C41.0239&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9738%2C41.0239&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Лестница Камондо" decoding="async" width="900" height="600" src="https://gezibilen.com/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fgezbi-e89bc.appspot.com%2Fo%2FTravelPoint%252Ft6Ukq34kS289sCVTsXD8%252Fbanner.webp%3Falt%3Dmedia%26token%3D093ca26b-9fff-4d3b-9fb4-2eb8d05c0d9e&w=3840&q=75"/>
+<img alt="Лестница Камондо" decoding="async" height="600" src="https://gezibilen.com/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fgezbi-e89bc.appspot.com%2Fo%2FTravelPoint%252Ft6Ukq34kS289sCVTsXD8%252Fbanner.webp%3Falt%3Dmedia%26token%3D093ca26b-9fff-4d3b-9fb4-2eb8d05c0d9e&amp;w=3840&amp;q=75" width="900"/>
 </div>
 <h3>История</h3>
 <p>Витая необарочная лестница ≈1869 года, построена банкиром Абрахамом Саломоном Камондо, чтобы детям было удобнее спускаться к школе и банку на Bankalar Caddesi.</p>
@@ -1413,10 +1942,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 25–40 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9734%2C41.0239&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9734%2C41.0239&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="SALT Galata" decoding="async" width="900" height="600" src="https://myartguides.com/wp-content/uploads/2019/11/SALT-Galata-1.jpg"/>
+<img alt="SALT Galata" decoding="async" height="600" src="https://myartguides.com/wp-content/uploads/2019/11/SALT-Galata-1.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>Культурный центр в здании бывшего Оттоманского банка (1890–1892, архитектор Александр Валлори). С 2011 года — библиотека, выставки, архив и кафе.</p>
@@ -1439,10 +1968,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 10–15 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9766%2C41.0218&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9766%2C41.0218&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Пристань Каракёй" decoding="async" width="900" height="600" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Karak%C3%B6y_ferry_pier_%281%29.jpg/1280px-Karak%C3%B6y_ferry_pier_%281%29.jpg"/>
+<img alt="Пристань Каракёй" decoding="async" height="600" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Karak%C3%B6y_ferry_pier_%281%29.jpg/1280px-Karak%C3%B6y_ferry_pier_%281%29.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>Городской причал у Галатского моста. Паромы через Золотой Рог и по Босфору. Исторический портовый узел европейской стороны.</p>
@@ -1465,10 +1994,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 10–15 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9776%2C41.0236&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9776%2C41.0236&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Улица Мумхане" decoding="async" width="900" height="600" src="https://static-pano.maps.yandex.ru/v1/?panoid=1246607146_806457060_23_1720298747&size=500%2C240&azimuth=166.1&tilt=10&api_key=maps&signature=IjvpIMDcuVt24olzazCC4NenlWO14tqTUOj-Cr9ZdUw="/>
+<img alt="Улица Мумхане" decoding="async" height="600" src="https://static-pano.maps.yandex.ru/v1/?panoid=1246607146_806457060_23_1720298747&amp;size=500%2C240&amp;azimuth=166.1&amp;tilt=10&amp;api_key=maps&amp;signature=IjvpIMDcuVt24olzazCC4NenlWO14tqTUOj-Cr9ZdUw=" width="900"/>
 </div>
 <h3>История</h3>
 <p>Улица в Каракёе — промежуточная точка маршрута к мечети Нусретие и Галатапорту. Район старых складов и лавок, сегодня — кафе и галереи.</p>
@@ -1491,10 +2020,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 15–25 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9832%2C41.0273&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9832%2C41.0273&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Мечеть Нусретие" decoding="async" width="900" height="600" src="https://avatars.mds.yandex.net/get-altay/9831711/2a0000018e19e4f897b0ee1ed818402b095f/XXXL"/>
+<img alt="Мечеть Нусретие" decoding="async" height="600" src="https://avatars.mds.yandex.net/get-altay/9831711/2a0000018e19e4f897b0ee1ed818402b095f/XXXL" width="900"/>
 </div>
 <h3>История</h3>
 <p>Построена в 1823–1826 годах по заказу Махмуда II архитектором Киркором Баляном в стиле османского барокко/ампира. Название связано с «победой» (nusret). Рядом — фонтан Топхане и набережная.</p>
@@ -1517,10 +2046,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 20–30 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9868%2C41.0275&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=28.9868%2C41.0275&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Галатапорт" decoding="async" width="900" height="600" src="https://yegclinic.com/wp-content/uploads/2022/09/galataport-2-640x427.jpg"/>
+<img alt="Галатапорт" decoding="async" height="600" src="https://yegclinic.com/wp-content/uploads/2022/09/galataport-2-640x427.jpg" width="900"/>
 </div>
 <h3>История</h3>
 <p>Современный круизный порт и набережная (открыт в 2021 году) на месте старых доков Топхане. Магазины, рестораны, прогулочная зона у Босфора. Исторический квартал Кылычали-Паша — вокруг.</p>
@@ -1529,8 +2058,8 @@ details[open] .photo-grid {
 <h3>Интересный факт</h3>
 <p>Galataport — один из крупнейших проектов реконструкции набережной в центре Стамбула.</p>
 <h3>Практический совет</h3>
-<p><b>Дальше до Долмабахче — два варианта:</b><br>
-<b>1) Пешком</b> вдоль Босфора / по Meclis-i Mebusan и дальше к Долмабахче — примерно 20–30 минут спокойным шагом.<br>
+<p><b>Дальше до Долмабахче — два варианта:</b><br/>
+<b>1) Пешком</b> вдоль Босфора / по Meclis-i Mebusan и дальше к Долмабахче — примерно 20–30 минут спокойным шагом.<br/>
 <b>2) На транспорте:</b> дойдите до остановки трамвая <b>T1 Tophane</b> или <b>Kabataş</b> (5–10 мин пешком). Сядьте на T1 в сторону <b>Kabataş</b> (если ещё не там) — конечная <b>Kabataş</b>. От Кабаташа 5–10 минут пешком до дворца Долмабахче вдоль воды. Оплата — Istanbulkart.</p>
 </div>
 </details>
@@ -1545,10 +2074,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 20–30 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0005%2C41.0392&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0005%2C41.0392&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Дворец Долмабахче" decoding="async" width="900" height="600" src="https://ptimages.s3.eu-west-2.amazonaws.com/img/contents_photos/dolmabahce-palace-istanbul-turkey-jpg.webp"/>
+<img alt="Дворец Долмабахче" decoding="async" height="600" src="https://ptimages.s3.eu-west-2.amazonaws.com/img/contents_photos/dolmabahce-palace-istanbul-turkey-jpg.webp" width="900"/>
 </div>
 <div class="paid-warn"><strong>Вход:</strong> внутри платно (Селамлык/Гарем — уточняйте актуальный тариф на месте, ориентир от ≈ 1500–2750 ₺ / ≈ 2625–4810 ₽). Набережная и вид на фасад — бесплатно</div>
 <h3>История</h3>
@@ -1572,10 +2101,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 15–25 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0066%2C41.0415&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0066%2C41.0415&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Площадь Бешикташ" decoding="async" width="900" height="600" src="https://relocarta.ru/_next/image?url=https%3A%2F%2Fhot.fileapi.ru%2Fdynamicstorage%2Frelocarta%2Fimages%2Fmavzoley-barbarosa-hayreddina-pashi.jpg&w=3840&q=75"/>
+<img alt="Площадь Бешикташ" decoding="async" height="600" src="https://relocarta.ru/_next/image?url=https%3A%2F%2Fhot.fileapi.ru%2Fdynamicstorage%2Frelocarta%2Fimages%2Fmavzoley-barbarosa-hayreddina-pashi.jpg&amp;w=3840&amp;q=75" width="900"/>
 </div>
 <h3>История</h3>
 <p>Оживлённая площадь и транспортный узел района Бешикташ: причал, автобусы, рынок, фанатская культура клуба Beşiktaş JK. Удобная точка между Долмабахче и Ортакёем.</p>
@@ -1598,10 +2127,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 10–15 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0062%2C41.0423&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0062%2C41.0423&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Мечеть Синанпаша" decoding="async" width="900" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sinan_Pasha_Mosque.jpg?width=900"/>
+<img alt="Мечеть Синанпаша" decoding="async" height="600" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sinan_Pasha_Mosque.jpg?width=900" width="900"/>
 </div>
 <h3>История</h3>
 <p>Мечеть в Бешикташе, связанная с комплексом XVI века (традиция связывает с кругом Мимара Синана / заказами адмирала Синан-паши). Небольшая, но выразительная точка на пути вдоль Босфора.</p>
@@ -1624,10 +2153,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 15–20 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0152%2C41.0436&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0152%2C41.0436&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Дворец Чираган" decoding="async" width="900" height="600" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_08TuLUEGc6n97ShLeuNA67b2KdUFgfqrPQ94np3AR3hVo4i4xiXRNsQ&s=10"/>
+<img alt="Дворец Чираган" decoding="async" height="600" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_08TuLUEGc6n97ShLeuNA67b2KdUFgfqrPQ94np3AR3hVo4i4xiXRNsQ&amp;s=10" width="900"/>
 </div>
 <div class="paid-warn"><strong>Вход:</strong> сейчас отель Kempinski: вход на территорию только для гостей/мероприятий. С улицы и набережной — бесплатно</div>
 <h3>История</h3>
@@ -1651,10 +2180,10 @@ details[open] .photo-grid {
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">На месте: 25–40 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0269%2C41.0473&z=17&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.0269%2C41.0473&amp;z=17&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <div class="photo-grid photo-single">
-<img alt="Мечеть Бююк Меджидие (Ортакёй)" decoding="async" width="900" height="600" src="https://gezibilen.com/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fgezbi-e89bc.appspot.com%2Fo%2FtravelPoints%252FIuoCTdpkmihKma07jruf%252Fortakoy_camii_1spvmlc0kuj.jpeg%3Falt%3Dmedia%26token%3D2e0ce679-c3d0-41c6-8d3f-c15fb1bc658b&w=3840&q=75"/>
+<img alt="Мечеть Бююк Меджидие (Ортакёй)" decoding="async" height="600" src="https://gezibilen.com/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fgezbi-e89bc.appspot.com%2Fo%2FtravelPoints%252FIuoCTdpkmihKma07jruf%252Fortakoy_camii_1spvmlc0kuj.jpeg%3Falt%3Dmedia%26token%3D2e0ce679-c3d0-41c6-8d3f-c15fb1bc658b&amp;w=3840&amp;q=75" width="900"/>
 </div>
 <h3>История</h3>
 <p>Мечеть на берегу Босфора в Ортакёе построена в 1853–1856 годах по заказу Абдул-Меджида I (архитектор Никогос Балян). Барочный фасад на воде и мост Босфора на фоне — один из самых узнаваемых видов Стамбула.</p>
@@ -1668,16 +2197,16 @@ details[open] .photo-grid {
 </details>
 </article>
 <article class="stop stop-transit" id="point-d3-back">
-<details>
+<details class="route-card">
 <summary>
-<span class="num" style="visibility:hidden">00</span>
+<span class="num" style="visibility:hidden">↩</span>
 <span class="stop-title"><strong>Как вернуться</strong><span class="tr-name">[Ортакёй → отель, Аксарай]</span></span>
 <span aria-hidden="true" class="chev">⌄</span>
 </summary>
 <div class="stop-content">
 <div class="badge-row">
 <span class="badge badge-time">В пути: 40–70 мин</span>
-<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.024263%2C41.048039&z=16&l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
+<a class="badge badge-map" href="https://yandex.ru/maps/?pt=29.024263%2C41.048039&amp;z=16&amp;l=map" rel="noopener" target="_blank">Показать на карте ↗</a>
 </div>
 <h3>От остановки Ortaköy / Kabataş Boys’ High School</h3>
 <p><b>Без пересадок:</b> на остановках у Ортакёя смотрите автобусы IETT в сторону <b>Eminönü, Aksaray, Yusufpaşa, Topkapı</b> (часто 28, 28T, 40 и др. — сверьте табло и карты в день поездки). Высадка: <b>Aksaray</b> или <b>Yusufpaşa</b>.</p>
@@ -1689,7 +2218,6 @@ details[open] .photo-grid {
 </details>
 </article>
 </section>
-
 <section class="card">
 <h2>Пешая нагрузка и время</h2>
 <p class="smallnote">Оценка по маршруту Дня 3 (Таксим — Галата — Галатапорт — Долмабахче — Ортакёй). Реальная дистанция зависит от заходов внутрь и пробок на набережной.</p>
@@ -1754,90 +2282,139 @@ details[open] .photo-grid {
 <p>В финальной версии здесь будут список точек, утверждённая ссылка на Яндекс Карты, описания, история, интересные факты, координаты, практические советы и оценка времени.</p>
 </section>
 </section>
-<section class="day" id="extra"><div class="dayheading"><span>ПОЛЕЗНОЕ</span><h1>Практическая информация</h1></div><article class="info-card" id="currency"><h2>Обмен валюты</h2>
-<p><b>Что брать с собой.</b> Удобнее всего сочетание: карта Visa/Mastercard (для оплаты в сетевых магазинах, такси BiTaksi, кафе) + наличные лиры на рынки, мелкие покупки и чай. Рубли в Турции почти нигде не меняют — меняйте заранее в евро/доллары или снимайте лиры в банкомате.</p>
-<p><b>Где менять.</b> Избегайте обмена в аэропорту (обычно худший курс). В центре хорошие курсы в районах Султанахмет, Сиркеджи, Каракёй и на Истикляль — смотрите вывески «Döviz». Сравнивайте <b>alış</b> (покупка у обменника) и <b>satış</b> (продажа вам) — вам важен курс, по которому вам <i>продают</i> лиры за евро/доллары.</p>
-<p><b>Банкоматы.</b> Ziraat, İş Bankası, Garanti, Yapı Kredi обычно нормальные. Перед снятием выберите «charge in TRY / without conversion», иначе банк наложит свой курс. Лимиты и комиссии зависят от вашего банка дома.</p>
-<p><b>Ориентир.</b> Цены в путеводителе даны в ₺; курс к рублю плавает — закладывайте запас. Крупные купюры (500–1000 ₺) иногда неохотно принимают в киосках — держите мелочь.</p>
-<p class="note">Курсы и комиссии меняются; перед поездкой сверьте актуальный курс в приложении банка.</p>
-</article><article class="info-card" id="istanbulkart"><h2>Istanbulkart</h2>
-<p><b>Что это.</b> Единая транспортная карта Стамбула: трамвай, метро, метробус, автобус, фуникулёр, Тюнель, канатная дорога, городские паромы Şehir Hatları.</p>
-<p><b>Покупка (актуально на 2026).</b> Анонимная карта ≈ <b>165 ₺</b> (без поездок). Покупается в жёлтых/синих автоматах <b>Biletmatik</b> на станциях метро, трамвая, у причалов и в аэропорту, либо в киосках с вывеской İstanbulkart. Интерфейс автомата — на английском (флажок).</p>
-<p><b>Пополнение.</b> В том же автомате: «Bakiye Yükle / Top up», положите карту на считыватель, внесите наличные или приложите банковскую карту. Есть приложение <b>İstanbulkart</b> (iOS/Android) для проверки баланса и пополнения.</p>
-<p><b>Тариф (с 20 июля 2026, полный тариф).</b> Одна поездка ≈ <b>46,20 ₺</b>. Пересадки в течение 120 минут дешевле: ≈ 34,40 ₺ → 26,42 ₺ → 17,18 ₺. Без карты / банковской картой на турникете часто ≈ <b>65 ₺</b> и без скидки на пересадку — карта окупается за 1–2 дня.</p>
-<p><b>Как пользоваться.</b> Приложите карту к валидатору на входе (и на некоторых паромах/метробусе — по правилам линии). Одна карта может оплатить несколько человек подряд (прикладывайте нужное число раз). Храните чек пополнения.</p>
-<p><b>Сколько класть.</b> На 2–3 дня активного маршрута удобно сразу положить 400–600 ₺ на человека (с запасом на паромы и пересадки). Цены на паромах выше обычного трамвая.</p>
-<p class="note">Тарифы пересматривают несколько раз в год — сверьте ближе к поездке на belbim.com.tr или в автомате.</p>
-</article><article class="info-card" id="transport"><h2>Городской транспорт</h2>
-<p><b>Трамвай T1 (Bağcılar–Kabataş).</b> Главная линия для этого путеводителя: Аксарай, Султанахмет, Гюльхане, Сиркеджи, Эминёню, Каракёй, Топхане, Кабаташ. Смотрите направление на табло: <b>Kabataş</b> или <b>Bağcılar</b>. Интервал днём часто 3–7 минут.</p>
-<p><b>Метро.</b> M2 (Yenikapı–Hacıosman) — Таксим и дальше на север. M1 — в сторону аэропорта (не путать с M11). Турникеты — Istanbulkart.</p>
-<p><b>Фуникулёр F1.</b> Таксим ↔ Кабаташ, 2–3 минуты, по карте. Удобно после Истикляль/Таксима спуститься к Босфору без холма.</p>
-<p><b>Канатная дорога.</b> На холм Пьер Лоти (Эюп) — отдельная линия, оплата Istanbulkart.</p>
-<p><b>Паромы Şehir Hatları.</b> Эминёню, Каракёй, Кабаташ, Эюп и др. Расписание на причале и в приложении. На пароме тоже карта (отдельный тариф, дороже трамвая).</p>
-<p><b>Метробус.</b> Скоростная автобусная линия по выделенке; для этого маршрута почти не нужен, но полезна для дальних переездов.</p>
-<p><b>Такси.</b> Официальные жёлтые такси или приложения <b>BiTaksi</b> / Uber. Просите включить счётчик (taksimetre). Избегайте «фиксированных» цен у туристических мест без приложения.</p>
-<p><b>Как не потеряться.</b> На трамвае и метро всегда смотрите конечную на табло. В Яндекс Картах / Google Maps включите офлайн-карты района Fatih и Beyoğlu заранее.</p>
-</article><article class="info-card" id="airport"><h2>Аэропорт и отель</h2>
-<p><b>Отель.</b> Район <b>Aksaray / Laleli (Fatih)</b>. Ближайшие остановки трамвая T1: <b>Aksaray</b> и <b>Yusufpaşa</b>. От остановки — несколько минут пешком до отеля.</p>
-<p><b>Из аэропорта Стамбул (IST).</b> Метро <b>M11</b> до центральной сети, далее пересадка на нужную линию/трамвай до Аксарая. Альтернатива — официальное такси или Havaist (автобус до ключевых узлов). В аэропорту сразу купите и пополните Istanbulkart в Biletmatik.</p>
-<p><b>Из Сабиха Гёкчен (SAW).</b> Метро/автобусы до азиатской стороны и дальше Marmaray или паром + трамвай; либо такси/трансфер. Время в пути обычно дольше, чем из IST.</p>
-<p><b>Обратно в аэропорт.</b> Заложите запас 2,5–3,5 часа до вылета международных рейсов с учётом дороги и досмотра. Ночной интервал транспорта реже — уточните расписание накануне.</p>
-<p><b>Багаж.</b> В час пик в трамвае T1 тесно; с большими чемоданами удобнее такси от/до отеля.</p>
-</article><article class="info-card" id="offline"><h2>Связь и офлайн-навигация</h2>
-<p><b>Этот путеводитель.</b> Откройте HTML на iPhone (Safari) и добавьте на экран «Домой» или сохраните страницу. На GitHub Pages он открывается с интернетом; фото подгружаются с сети.</p>
-<p><b>Карты офлайн.</b> Скачайте офлайн-область «Istanbul» в Яндекс Картах и/или Google Maps (Fatih, Beyoğlu, Eyüpsultan). Сохраните адрес отеля в избранное.</p>
-<p><b>eSIM / SIM.</b> Удобные туристические eSIM (Airalo, Holafly и др.) или местные Turkcell / Vodafone / Türk Telekom в аэропорту и салонах. Для карт и мессенджеров хватает 5–10 ГБ на неделю.</p>
-<p><b>Приложения до вылета.</b> Яндекс Карты, Google Maps, Istanbulkart, BiTaksi, переводчик (офлайн-пакет турецкого), авиакомпания/boarding pass.</p>
-<p><b>Питание телефона.</b> Power bank обязателен: карты, фото и валидация карты сажают батарею за длинный день.</p>
-</article><article class="info-card" id="food"><h2>Еда и недорогие места</h2>
-<p><b>Что попробовать.</b> Балык-экмек (рыба в хлебе) у Эминёню, дёнер/кебаб, симит с чаем, менте, лахмаджун, кюнефе, турецкий завтрак (serpme kahvaltı), айран.</p>
-<p><b>Где есть недорого.</b> Столовые «lokanta» и «esnaf yemekleri» — комплексные обеды по разумной цене. Избегайте ресторанов с «меню для туристов» у входа в Айя-Софию и Голубую мечеть без отзыва.</p>
-<p><b>Районы.</b> Каракёй и вокруг Галаты — много кафе; Эминёню — уличная еда у причала; Балат/Фенер — уютные кофейни; Истикляль — удобно, но дороже.</p>
-<p><b>Вода и чай.</b> Вода из-под крана официально считается питьевой, но туристы обычно берут бутилированную. Чай (çay) — часть культуры: маленькие тюльпановидные стаканы повсюду.</p>
-<p><b>Оплата.</b> В сетевых местах — карта; в мелких киосках и на рынках — наличные. Чаевые не обязательны, но округление счёта принято.</p>
-<p><b>Алкоголь.</b> Дороже, чем в РФ; в мечетях и у некоторых семейных заведений не подают. Раки и пиво — в мейхане и барах Бейоглу.</p>
-</article><article class="info-card" id="shopping"><h2>Шоппинг и аутлеты</h2>
-<p><b>Гранд-базар и Египетский базар.</b> Торгуйтесь вежливо, сравнивайте цены в нескольких лавках. На специи, сладости и текстиль смотрите срок и фасовку. Картой принимают не везде.</p>
-<p><b>Истикляль и современные ТРЦ.</b> Фиксированные цены, примерочные, возврат по правилам магазина.</p>
-<p><b>Обувь и спорт.</b> Ищите официальные магазины и outlet с вывеской бренда; на рынках легко нарваться на подделку. Чек и упаковка — ваши друзья на таможне.</p>
-<p><b>Налоги.</b> Tax free возможен в крупных магазинах при выполнении порога суммы — уточняйте на кассе и сохраняйте документы для аэропорта.</p>
-<p><b>Что везти.</b> Рахат-лукум, кофе, специи, керамика, текстиль. Жидкости и продукты — по правилам ручной клади авиакомпании.</p>
-</article><article class="info-card" id="phrases"><h2>Полезные фразы на турецком</h2>
-<ul class="phrases">
-<li><b>Merhaba</b> — Здравствуйте</li>
-<li><b>Teşekkürler / Sağ ol</b> — Спасибо</li>
-<li><b>Lütfen</b> — Пожалуйста</li>
-<li><b>Evet / Hayır</b> — Да / Нет</li>
-<li><b>Ne kadar?</b> — Сколько стоит?</li>
-<li><b>Hesap, lütfen</b> — Счёт, пожалуйста</li>
-<li><b>Kart geçerli mi?</b> — Картой можно?</li>
-<li><b>Durak nerede?</b> — Где остановка?</li>
-<li><b>Aksaray'a, lütfen</b> — До Аксарая, пожалуйста</li>
-<li><b>Anlamıyorum</b> — Не понимаю</li>
-<li><b>Yardım eder misiniz?</b> — Помогите, пожалуйста</li>
-<li><b>Tuvalet nerede?</b> — Где туалет?</li>
-<li><b>Bir çay, lütfen</b> — Один чай, пожалуйста</li>
-<li><b>Bu çok pahalı</b> — Это очень дорого</li>
-<li><b>İndirim var mı?</b> — Есть скидка?</li>
+<section class="day" id="extra"><div class="dayheading"><span>ПОЛЕЗНОЕ</span><h1>Практическая информация</h1></div><p class="info-lede">Короткие подсказки, которые помогут ориентироваться в городе, не тратить лишнее и спокойно возвращаться в отель.</p><article class="info-card" id="currency"><h2>Деньги и оплата</h2>
+<p><b>Главное правило:</b> держите небольшую сумму наличных в турецких лирах и отдельную банковскую карту для тех мест, где её принимают. В Стамбуле можно расплачиваться картой во многих отелях, сетевых магазинах и ресторанах, но на рынках, в небольших кафе, у уличных продавцов и в некоторых кассах наличные по-прежнему удобнее.</p>
+<h3>Обмен валюты</h3>
+<p>Ищите лицензированные обменные пункты с вывеской <b>Döviz</b>. Смотрите не на крупную цифру на табло, а на строку <b>Satış</b> — это курс, по которому обменник продаёт вам лиры. Сравните несколько пунктов и уточните, нет ли комиссии. Не меняйте всю сумму сразу: курс и ваши расходы могут измениться по ходу поездки.</p>
+<p>В аэропорту обмен обычно удобен, но не всегда выгоден. Разумнее поменять небольшую сумму на дорогу, а основную — в городе после сравнения курса. Не передавайте деньги незнакомым посредникам и пересчитывайте купюры у стойки.</p>
+<h3>Снятие наличных и оплата картой</h3>
+<p>Пользуйтесь банкоматами крупных банков, установленными у отделений или в хорошо освещённых местах. Если банкомат предлагает списать сумму в валюте вашей карты, выбирайте списание в <b>TRY (турецких лирах)</b> и отказывайтесь от конвертации банкомата — курс вашего банка или платёжной системы часто прозрачнее. Перед подтверждением проверьте комиссию на экране.</p>
+<p>Принимают ли иностранную карту и будет ли она работать за границей, зависит от страны выпуска, банка и платёжной системы. Не рассчитывайте на одну карту: заранее проверьте её работу, лимиты и комиссии, а при возможности возьмите резервный способ оплаты.</p>
+<h3>Мелкие полезные привычки</h3>
+<p>Носите немного мелких купюр для воды, симита, туалетов и небольших покупок. Не показывайте весь кошелёк и не пересчитывайте крупную сумму на улице. Цены в этом путеводителе — ориентиры, а не обещание фиксированной стоимости: перед посещением проверяйте актуальные цены на официальных сайтах.</p>
+</article><article class="info-card" id="istanbulkart"><h2>İstanbulkart — транспортная карта</h2>
+<p><b>İstanbulkart</b> — пополняемая карта для оплаты большинства городских поездок: метро, трамваев, автобусов, метробуса, фуникулёров, канатной дороги и городских паромов. Для маршрутов этого путеводителя она особенно удобна: не придётся каждый раз покупать отдельный билет.</p>
+<h3>Где купить</h3>
+<p>Анонимную карту можно приобрести в автоматах <b>Biletmatik / BELBİM</b> на станциях метро и трамвая, у крупных причалов и в других транспортных узлах. Ищите автоматы продажи и пополнения билетов. Карта продаётся отдельно от поездок — после покупки её нужно пополнить.</p>
+<p>Официальный сайт İstanbulkart указывает стоимость обычной карты <b>165 ₺</b>; полный тариф одной стандартной поездки на сайте Metro İstanbul — <b>46,20 ₺</b>. Это опубликованные тарифы на момент подготовки путеводителя (ноябрь 2026 года), а не гарантия цены на дату поездки в 2027-м. Проверяйте цифры перед вылетом: тарифы могут меняться.</p>
+<h3>Как пользоваться</h3>
+<p>На входе приложите карту к считывателю и дождитесь подтверждения оплаты. На некоторых маршрутах — например, на отдельных паромах или метробусе — правила выхода и повторного прикладывания могут отличаться: следуйте указателям на станции. Пополнять карту можно в автоматах; интерфейс обычно можно переключить на английский.</p>
+<p>Если путешествуете вдвоём, удобнее иметь по карте на человека: так проще проходить турникеты и контролировать остаток. Возможность оплатить несколько пассажиров одной картой зависит от вида транспорта и условий тарифа; при таком способе не стоит рассчитывать на скидки за пересадки для каждого пассажира.</p>
+<h3>Сколько положить</h3>
+<p>Не загружайте сразу большую сумму. Начните с суммы на первые поездки, а затем пополняйте по мере необходимости. Учитывайте, что поездки на пароме, Marmaray и некоторые специальные линии могут стоить иначе, чем обычный проезд на трамвае или автобусе.</p>
+<p class="source-note">Проверить стоимость карты: <a href="https://www.istanbulkart.istanbul/ucretler-limitler/" rel="noopener" target="_blank">официальные тарифы İstanbulkart</a>. Тарифы метро: <a href="https://www.metro.istanbul/en/SeferDurumlari/BiletUcretleri" rel="noopener" target="_blank">Metro İstanbul</a>.</p>
+</article><article class="info-card" id="transport"><h2>Как устроен транспорт Стамбула</h2>
+<p>Стамбул огромен, холмист и разделён Босфором и Золотым Рогом. Самый удобный способ передвижения — комбинировать рельсовый транспорт, автобусы и паромы. Для каждого дня маршрута я оставил отдельные блоки <b>«Как доехать»</b> и <b>«Как вернуться»</b>; здесь — общая шпаргалка, чтобы понимать систему.</p>
+<h3>Линии, которые пригодятся чаще всего</h3>
+<ul>
+<li><b>T1 — трамвай.</b> Связывает Aksaray / Yusufpaşa, исторический центр Sultanahmet, Gülhane, Sirkeci, Eminönü, Karaköy, Tophane и Kabataş. Для первых дней это одна из самых полезных линий. Проверяйте конечную на табло: Bağcılar или Kabataş.</li>
+<li><b>M1 — метро.</b> Линии M1A и M1B проходят через Yenikapı и станцию Aksaray; полезны для пересадки с других линий и поездки по западной части города.</li>
+<li><b>M2 — метро.</b> Проходит через Yenikapı, Şişhane и Taksim, далее на север. Удобна для Таксима и Бейоглу.</li>
+<li><b>M11 — аэропортовое метро.</b> Соединяет İstanbul Havalimanı с городской сетью через Kağıthane и Gayrettepe. Для отеля в Аксарае понадобится пересадка.</li>
+<li><b>F1 — фуникулёр.</b> Kabataş ↔ Taksim. Короткий подъём, который помогает не идти пешком по крутому склону.</li>
+<li><b>TF2 — канатная дорога.</b> Eyüp ↔ Pierre Loti. Подъём на смотровой холм; работа зависит от погодных условий и режима линии.</li>
+<li><b>M4 — метро на азиатской стороне.</b> Соединяет Kadıköy с аэропортом Sabiha Gökçen; для пересадки на Marmaray удобна станция Ayrılık Çeşmesi.</li>
 </ul>
-<p>В транспорте и у старшего поколения английский может не сработать — карта и номер отеля на экране помогают лучше длинных объяснений.</p>
-</article><article class="info-card" id="emergency"><h2>Экстренная информация</h2>
-<p><b>Единый номер экстренных служб:</b> <b>112</b> (полиция, скорая, пожарные).</p>
-<p><b>Туристическая полиция Стамбула:</b> 0212 527 45 03 (уточняйте актуальный номер на месте).</p>
-<p><b>Посольство / консульство РФ</b> — сохраните актуальные контакты с сайта mid.ru до вылета.</p>
-<p><b>При потере паспорта.</b> Заявление в полицию → справка → консульство для свидетельства на возвращение. Носите фото паспорта и полиса в облаке.</p>
-<p><b>Медицина.</b> Аптеки (eczane): дежурные сменяют друг друга, список на двери ближайшей. Европейская страховка / travel-полис — держите телефон и номер полиса под рукой.</p>
-<p><b>Отель.</b> Сохраните название и адрес на турецком в заметках и офлайн-картах. При потере телефона — точка сбора: ресепшен отеля.</p>
-</article><article class="info-card" id="ramadan"><h2>Рамадан (ориентир: февраль–март)</h2>
-<p><b>Что меняется.</b> В месяц поста часть кафе днём работает тише или с ограниченным меню; после ифтара (вечером) центры и набережные оживают. Мечети открыты для намаза; туристам в крупные мечети лучше приходить вне молитв.</p>
-<p><b>Еда днём.</b> В туристических районах (Султанахмет, Бейоглу, Каракёй) еда находится всегда. В более «местных» кварталах днём может быть скромнее выбор.</p>
-<p><b>Расписание.</b> Время имака и ифтара смещается каждый день — смотрите в приложениях или на вывесках мечетей.</p>
-<p><b>Уважение.</b> Не есть и не пить демонстративно рядом с постящимися в тесном транспорте; в мечетях — скромная одежда, снимать обувь, женщинам — платок.</p>
-<p class="note">Точные даты Рамадана зависят от лунного календаря; уточните перед поездкой, попадает ли ваш период.</p>
+<h3>Паромы — это тоже транспорт</h3>
+<p>Городские паромы <b>Şehir Hatları</b> пересекают Босфор и Золотой Рог и часто оказываются приятнее наземной поездки: можно отдохнуть, посмотреть на город с воды и избежать части пробок. Но у паромов есть расписание, а интервалы вечером и в выходные могут отличаться. Сверяйте нужный причал и направление перед выходом.</p>
+<h3>Автобусы и такси</h3>
+<p>На автобусе смотрите не только номер, но и конечную остановку на электронном табло. Одинаковые номера с разными буквами могут идти по разным вариантам маршрута. Для такси используйте официальную стоянку или приложение, убедитесь, что включён счётчик, и заранее отметьте адрес отеля на карте. Не соглашайтесь на поездку по случайной «фиксированной цене» от зазывал.</p>
+<h3>Ночные поездки</h3>
+<p>Не исходите из того, что весь транспорт работает круглосуточно. Ночное метро действует только на определённых линиях и в отдельные ночи — обычно в ночь с пятницы на субботу и с субботы на воскресенье; расписание и список линий проверяйте на сайте Metro İstanbul. Паромы и автобусы имеют собственные графики.</p>
+<p class="source-note"><a href="https://www.metro.istanbul/" rel="noopener" target="_blank">Metro İstanbul — линии, схемы и расписания</a> · <a href="https://sehirhatlari.istanbul/en" rel="noopener" target="_blank">Şehir Hatları — паромы</a> · <a href="https://iett.istanbul/" rel="noopener" target="_blank">İETT — автобусы</a>.</p>
+</article><article class="info-card" id="airport"><h2>Аэропорты и дорога до отеля</h2>
+<p>В путеводителе исходная точка проживания — район <b>Aksaray / Laleli</b> в европейской части Стамбула. Ближайшие удобные ориентиры для транспорта — станции и остановки <b>Aksaray</b> и <b>Yusufpaşa</b> на трамвайной линии T1 и рядом с линией M1. Перед поездкой сохраните точный адрес отеля: в этом районе похожие названия улиц и отелей легко перепутать.</p>
+<h3>Из İstanbul Havalimanı (IST)</h3>
+<p><b>На метро:</b> линия M11 идёт от аэропорта к Gayrettepe. Там можно пересесть на M2 в сторону Yenikapı, а затем — на M1 в сторону Aksaray. Это вариант с пересадками и переходами; если вы с тяжёлым багажом, он может быть утомительным.</p>
+<p><b>На автобусе Havaist:</b> у аэропорта есть шаттл-маршрут в сторону Aksaray (проверяйте актуальное обозначение маршрута, место посадки и расписание на официальном сайте). Для отеля в Аксарае этот вариант может быть удобнее, если остановка находится рядом.</p>
+<h3>Из Sabiha Gökçen (SAW)</h3>
+<p><b>На метро:</b> линия M4 начинается у аэропорта и идёт до Kadıköy. Для пересадки на Marmaray можно выйти на Ayrılık Çeşmesi и доехать до Yenikapı, затем пересесть на M1 до Aksaray. Сверяйте маршрут в приложении непосредственно перед выездом.</p>
+<p><b>Автобус / шаттл:</b> доступны городские автобусы и аэропортовые шаттлы, в том числе направления к Kadıköy и Taksim. Они могут быть удобны, но дорога зависит от пробок и конечной остановки.</p>
+<h3>Сколько времени заложить</h3>
+<p>Не планируйте дорогу в аэропорт «впритык». Для международного вылета разумно оставить большой запас на дорогу, пробки, регистрацию и контроль; точное время прибытия сверяйте с авиакомпанией и аэропортом. В часы пик наземный транспорт может идти значительно дольше обычного.</p>
+<p>Официальные источники: <a href="https://www.dhmi.gov.tr/Sayfalar/Havalimani/Istanbul/Ulasim.aspx" rel="noopener" target="_blank">транспорт из IST</a> · <a href="https://www.sabihagokcen.aero/en-EN/passengers-and-visitors/transport-and-parking/transportation/metro-en" rel="noopener" target="_blank">метро из SAW</a> · <a href="https://www.iett.istanbul/icerik/Access-to-Airports" rel="noopener" target="_blank">автобусы IETT до аэропортов</a>.</p>
+</article><article class="info-card" id="offline"><h2>Связь, карты и сам путеводитель</h2>
+<h3>Как пользоваться на iPhone</h3>
+<p>Откройте файл в Safari и добавьте его на экран «Домой» через меню «Поделиться» → <b>На экран Домой</b>. Так путеводитель будет запускаться почти как отдельное приложение. Если вы открываете его как локальный HTML-файл, проверьте заранее, что он корректно открывается после перезапуска Safari.</p>
+<p>Важный нюанс: фотографии в этой версии загружаются с внешних сайтов, а ссылки на карты открывают онлайн-сервисы. Поэтому для полной работы нужен интернет. Добавление страницы на экран «Домой» само по себе не скачивает фотографии и карты для офлайн-режима.</p>
+<h3>Подготовьте карты заранее</h3>
+<ul>
+<li>Скачайте офлайн-карты нужных районов в приложении, которым планируете пользоваться. Отдельно проверьте, поддерживает ли выбранное приложение офлайн-маршрутизацию для общественного транспорта — это не всегда доступно.</li>
+<li>Сохраните отель в избранное и сделайте скриншот его адреса на турецком языке.</li>
+<li>Сохраните ключевые точки маршрута и причалы, особенно если планируете возвращаться на пароме.</li>
+<li>Перед выходом проверьте заряд телефона и возьмите небольшой внешний аккумулятор. Навигация, камера и мобильный интернет быстро расходуют батарею.</li>
+</ul>
+<h3>SIM или eSIM</h3>
+<p>Для короткой поездки часто удобна eSIM, если ваш iPhone поддерживает её и устройство не привязано к оператору. Сравните объём трафика, срок действия и поддержку раздачи интернета. Местную SIM можно купить у операторов Turkcell, Vodafone или Türk Telekom; в аэропорту это удобно, но цена и пакет могут отличаться от городских салонов.</p>
+</article><article class="info-card" id="food"><h2>Еда: что попробовать и как выбирать</h2>
+<p>Стамбульская еда — не только кебаб. В течение прогулки удобно чередовать полноценный обед, небольшие перекусы и чайные паузы. Не обязательно искать ресторан с видом: часто вкуснее и спокойнее в заведениях на одну-две улицы в стороне от главных туристических площадей.</p>
+<h3>Что попробовать</h3>
+<ul>
+<li><b>Simit</b> — круглый кунжутный хлеб, который хорошо сочетается с чаем.</li>
+<li><b>Balık ekmek</b> — рыба в хлебе; традиционный вариант ищут у Эминёню, но смотрите на свежесть и чистоту места.</li>
+<li><b>Döner / kebap</b> — мясо на вертеле и разные варианты кебаба.</li>
+<li><b>Lahmacun</b> — тонкая лепёшка с пряной мясной начинкой; обычно её сворачивают с зеленью и лимоном.</li>
+<li><b>Meze</b> — небольшие закуски, которые подают к столу.</li>
+<li><b>Menemen</b> — яйца, приготовленные с томатами и перцем; популярный вариант завтрака.</li>
+<li><b>Künefe</b> — горячий десерт из тонкого теста с сырной начинкой и сиропом.</li>
+<li><b>Ayran</b> — солёный кисломолочный напиток; к мясным блюдам подходит отлично.</li>
+</ul>
+<h3>Где поесть без переплаты</h3>
+<p>Ищите <b>lokanta</b> и <b>esnaf lokantası</b> — городские столовые с готовыми блюдами. Витрина обычно позволяет увидеть еду до заказа. Смотрите меню с ценами до того, как сесть; уточняйте размер порции и стоимость напитков. В популярных местах у Айя-Софии, Голубой мечети, Галатской башни и набережных цена часто выше.</p>
+<h3>Небольшие правила</h3>
+<p>Проверяйте счёт до оплаты, особенно если на столе были закуски, которые принесли без отдельного заказа. Уточняйте, включено ли обслуживание. Чаевые не обязательны, но небольшую сумму можно оставить за хорошее обслуживание. Воду в бутылке покупайте запечатанной. Если у вас есть пищевые ограничения или аллергии, проговорите их до заказа — не полагайтесь только на перевод названия блюда.</p>
+</article><article class="info-card" id="shopping"><h2>Покупки, базары и аутлеты</h2>
+<h3>Гранд-базар и Египетский базар</h3>
+<p>Это не супермаркеты с фиксированными ценами: здесь важны сравнение и спокойный торг. Сначала посмотрите несколько похожих товаров, узнайте цену в разных лавках, а затем решайте, стоит ли покупать. Торгуйтесь дружелюбно и без давления; если цена не подходит, можно просто поблагодарить и уйти.</p>
+<p>На специи, чай, сладости и косметику обращайте внимание на состав, дату производства, срок годности и упаковку. Для текстиля и сувениров уточняйте материал и страну производства. Не покупайте изделия из охраняемых природных материалов и антиквариат сомнительного происхождения.</p>
+<h3>Обычные магазины и торговые центры</h3>
+<p>В сетевых магазинах цены обычно фиксированные. Сохраняйте чек, проверяйте условия возврата и обмена до оплаты. Если рассчитываете на tax free, заранее уточните, участвует ли магазин в системе, какой минимальный чек нужен и какие документы потребуется предъявить в аэропорту.</p>
+<h3>Спортивная одежда и обувь</h3>
+<p>Для Nike и ASICS ищите официальные магазины и проверенные outlet/discounter-точки. Сверяйте адреса с официальными локаторами брендов: название «outlet» в карточке магазина само по себе не гарантирует, что это официальный магазин или что нужные размеры будут в наличии. Сравнивайте цену, модель и артикул, а не только внешний вид коробки.</p>
+</article><article class="info-card" id="phrases"><h2>Небольшой разговорник</h2>
+<p>Турецкие слова не обязательны для поездки, но даже несколько простых фраз делают общение теплее. Произносите спокойно; если вас не поняли, покажите фразу на экране.</p>
+<div class="phrase-list">
+<p><b>Merhaba</b><span>Здравствуйте / привет</span></p>
+<p><b>Günaydın</b><span>Доброе утро</span></p>
+<p><b>Teşekkür ederim</b><span>Спасибо</span></p>
+<p><b>Lütfen</b><span>Пожалуйста</span></p>
+<p><b>Evet / Hayır</b><span>Да / нет</span></p>
+<p><b>Ne kadar?</b><span>Сколько стоит?</span></p>
+<p><b>Hesap, lütfen</b><span>Счёт, пожалуйста</span></p>
+<p><b>Kart geçerli mi?</b><span>Можно оплатить картой?</span></p>
+<p><b>Tuvalet nerede?</b><span>Где туалет?</span></p>
+<p><b>Durak nerede?</b><span>Где остановка?</span></p>
+<p><b>Aksaray'a, lütfen</b><span>До Аксарая, пожалуйста</span></p>
+<p><b>Anlamıyorum</b><span>Я не понимаю</span></p>
+<p><b>Yardım eder misiniz?</b><span>Не могли бы вы помочь?</span></p>
+<p><b>İngilizce biliyor musunuz?</b><span>Вы говорите по-английски?</span></p>
+</div>
+</article><article class="info-card" id="emergency"><h2>Безопасность и экстренные случаи</h2>
+<p>Стамбул — большой и оживлённый город. Обычные меры предосторожности здесь особенно полезны в толпе, транспорте, на рынках и возле популярных достопримечательностей.</p>
+<h3>Если нужна срочная помощь</h3>
+<p><b>112</b> — единый номер экстренной помощи в Турции. По возможности назовите район, ближайшую улицу или достопримечательность и объясните, что произошло. Сохраните номер в контактах заранее.</p>
+<h3>Документы и вещи</h3>
+<ul>
+<li>Храните паспорт и запасную банковскую карту отдельно от кошелька. Сделайте защищённую копию документов, доступную вам без телефона.</li>
+<li>В толпе держите телефон и кошелёк во внутреннем кармане или сумке перед собой. Не кладите телефон на край столика у прохода.</li>
+<li>Пользуйтесь официальными такси и приложениями; проверяйте номер машины и маршрут.</li>
+<li>Не соглашайтесь на помощь случайных людей у банкоматов и обменников, не отдавайте карту из рук.</li>
+<li>На переходах и остановках будьте внимательны: движение в центре плотное, а трамвайные пути пересекают пешеходные зоны.</li>
+</ul>
+<h3>Если потеряли паспорт</h3>
+<p>Обратитесь в местную полицию и получите документ о заявлении, затем свяжитесь с консульством своей страны для инструкций по временному документу на возвращение. Контакты посольства и консульства сохраните с официального сайта МИД вашей страны до поездки — телефоны и часы приёма могут меняться.</p>
+<p>При потере банковской карты сразу заблокируйте её через приложение банка или по официальному номеру поддержки. При потере телефона заблокируйте SIM/eSIM и используйте функцию поиска устройства.</p>
+</article><article class="info-card" id="ramadan"><h2>Рамадан и религиозные особенности</h2>
+<p>Рамадан — месяц поста в исламском календаре. Его даты каждый год сдвигаются относительно григорианского календаря, поэтому для поездки в 2027 году проверьте точные даты ближе к путешествию по официальному календарю религиозных органов Турции.</p>
+<h3>Как меняется город</h3>
+<p>В дни Рамадана многие мусульмане воздерживаются от еды и питья от рассвета до заката. При этом туристические районы обычно продолжают обслуживать гостей: часть кафе и ресторанов работает днём как обычно, часть может менять часы или меню. После захода солнца начинается ифтар — вечерний приём пищи; популярные площади и рестораны могут быть особенно оживлёнными.</p>
+<h3>Посещение мечетей</h3>
+<p>Крупные мечети остаются действующими религиозными пространствами. Туристический осмотр может быть ограничен во время молитв, особенно в пятницу и в дни религиозных праздников. Одежда должна закрывать плечи и колени; женщинам обычно нужен платок для покрытия волос. Обувь снимают перед входом в молитвенный зал. Следуйте указаниям сотрудников и не фотографируйте молящихся без разрешения.</p>
+<h3>Практический совет</h3>
+<p>Планируйте обед заранее, не рассчитывайте на конкретное кафе без проверки его часов работы и оставляйте больше времени на транспорт вечером. В праздничные дни расписания, режим работы музеев и поток людей могут отличаться от обычных.</p>
 </article></section>
 <div class="footer">Личный офлайн-путеводитель по Стамбулу · Рабочая версия. Проверяйте обновления тарифов, расписаний и правил ближе к поездке.</div>
 </main>
-
 <script>
 (() => {
   const days = [...document.querySelectorAll('main > .day')];
@@ -1902,4 +2479,27 @@ details[open] .photo-grid {
     });
   });
 })();
-</script></body></html>
+</script>
+<script>
+(() => {
+  const root = document.documentElement;
+  const button = document.getElementById('themeToggle');
+  if (!button) return;
+  const stored = (() => { try { return localStorage.getItem('istanbul-guide-theme'); } catch (_) { return null; } })();
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initial = stored === 'dark' || stored === 'light' ? stored : (prefersDark ? 'dark' : 'light');
+  const apply = (theme) => {
+    root.dataset.theme = theme;
+    const dark = theme === 'dark';
+    button.querySelector('.theme-icon').textContent = dark ? '☀' : '☾';
+    button.setAttribute('aria-label', dark ? 'Включить светлую тему' : 'Включить тёмную тему');
+    button.title = dark ? 'Светлая тема' : 'Тёмная тема';
+    try { localStorage.setItem('istanbul-guide-theme', theme); } catch (_) {}
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = dark ? '#101522' : '#536df5';
+  };
+  apply(initial);
+  button.addEventListener('click', () => apply(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+})();
+</script>
+</body></html>
